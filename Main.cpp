@@ -32,10 +32,10 @@ public static int isIn(char *args[], char param[]){
  */
 int main(int argc, char *argv[]){
 	
-	//list<Pessoa> p;
+	list<Pessoa> p;
 	map<String,Genero> g;
-	//list<Midia> m;
-	//list<Emprestimo> e;
+	list<Midia> m;
+	list<Emprestimo> e;
 	bool ro;
 	int idx;
 	
