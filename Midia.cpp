@@ -1,5 +1,11 @@
 #include<cstdlib>
-#include"Genero.cpp"
+#include<string>
+#include<cstdio>
+//#include"Genero.cpp"
+
+class Genero;
+
+using namespace std;
 
 class Midia{
 
@@ -8,21 +14,21 @@ private:
 	string nome;
 	char type;
 	int tamanho;
-	Genero genero;
+	Genero& genero;
 	bool possui;
 	bool consumiu;
 	bool deseja;
 	double preco;
 
 public:
-	Midia(int codigo, string nome, int tamanho, Genero genero, bool possui, bool consumiu, bool deseja, double preco, char type);
-	Midia();
+	Midia(int codigo, string nome, int tamanho, Genero& genero, bool possui, bool consumiu, bool deseja, double preco, char type);
+	//Midia();
 	char getType();
 	void setType(char type);
 	int getCodigo();
 	string getNome();
 	int getTamanho();
-	Genero getGenero();
+	Genero& getGenero();
 	bool isPossui();
 	bool isConsumiu();
 	bool isDeseja();
@@ -33,9 +39,9 @@ public:
 	void setPreco(double preco);
 	string toString();
 	int compareTo(Midia otherMidia);
-	
+
 };
-	
+
 
 /**
  * Construtor de Midia
@@ -49,22 +55,21 @@ public:
  * @param preco preco da midia
  * @param type tipo de midia
  */
-Midia::Midia(int codigo, string nome, int tamanho, Genero genero, bool possui, bool consumiu, bool deseja, double preco, char type) {
-	this.codigo = codigo;
-	this.nome = nome;
-	this.tamanho = tamanho;
-	this.genero = genero;
-	this.possui = possui;
-	this.consumiu = consumiu;
-	this.deseja = deseja;
-	this.preco = preco;
-	this.type = type;
+Midia::Midia(int codigo, string nome, int tamanho, Genero& genero, bool possui, bool consumiu, bool deseja, double preco, char type): genero(genero){
+	this->codigo = codigo;
+	this->nome = nome;
+	this->tamanho = tamanho;
+	this->possui = possui;
+	this->consumiu = consumiu;
+	this->deseja = deseja;
+	this->preco = preco;
+	this->type = type;
 }
 
 /**
  * Construtor de Midia
  */
-Midia::Midia(){}
+//Midia::Midia(){}
 
 /**
  * Pega tipo de midia
@@ -79,7 +84,7 @@ char Midia::getType() {
  * @param type tipo de midia
  */
 void Midia::setType(char type) {
-	this.type = type;
+	this->type = type;
 }
 
 /**
@@ -110,7 +115,7 @@ int Midia::getTamanho() {
  * Pega genero da midia
  * @return genero da midia
  */
-Genero Midia::getGenero() {
+Genero& Midia::getGenero() {
 	return genero;
 }
 
@@ -151,7 +156,7 @@ double Midia::getPreco() {
  * @param possui true se possui ou false caso contrario
  */
 void Midia::setPossui(bool possui) {
-	this.possui = possui;
+	this->possui = possui;
 }
 
 /**
@@ -159,7 +164,7 @@ void Midia::setPossui(bool possui) {
  * @param consumiu true se consumiu ou false contrario
  */
 void Midia::setConsumiu(bool consumiu) {
-	this.consumiu = consumiu;
+	this->consumiu = consumiu;
 }
 
 /**
@@ -167,7 +172,7 @@ void Midia::setConsumiu(bool consumiu) {
  * @param deseja true se deseja ou false caso contrario
  */
 void Midia::setDeseja(bool deseja) {
-	this.deseja = deseja;
+	this->deseja = deseja;
 }
 
 /**
@@ -175,35 +180,38 @@ void Midia::setDeseja(bool deseja) {
  * @param preco preco da midia
  */
 void Midia::setPreco(double preco) {
-	this.preco = preco;
+	this->preco = preco;
 }
 
 string Midia::toString()
 {
-	return "Nome: "+nome+", tipo: "+type+", preço: "+preco+", tamanho: "+tamanho;
+  char pc[10],tm[10];
+	sprintf(pc,"%.2lf",preco);
+	sprintf(tm,"%d",tamanho);
+	return "Nome: "+nome+", tipo: "+type+", preço: "+pc+", tamanho: "+tm;
 }
 
-/**
- * Método de critério de ordenação
- */
-int Midia::compareTo(Midia otherMidia) {
-	locale br = setlocale(LC_ALL, "Portuguese");
-	collate collator = use_facet<collate<char> >(br);
-    if (this.type < otherMidia.type) {
-        return -1;
-    }
-    else if (this.type > otherMidia.type) {
-        return 1;
-    }else
-    {
-    	if(this.preco > otherMidia.preco)
-    	{
-    		return -1;
-    	}else if(this.preco < otherMidia.preco)
-    		return 1;
-    	else
-    	{
-    		return collator.compare(this.getNome(), this.getNome()+this.getNome().length(), otherMidia.getNome(), otherMidia.getNome()+otherMidia.getNome().length());
-    	}
-    }
-}
+// /**
+//  * Método de critério de ordenação
+//  */
+// int Midia::compareTo(Midia otherMidia) {
+// 	locale br = setlocale(LC_ALL, "Portuguese");
+// 	collate collator = use_facet<collate<char> >(br);
+//     if (this->type < otherMidia.type) {
+//         return -1;
+//     }
+//     else if (this->type > otherMidia.type) {
+//         return 1;
+//     }else
+//     {
+//     	if(this->preco > otherMidia.preco)
+//     	{
+//     		return -1;
+//     	}else if(this->preco < otherMidia.preco)
+//     		return 1;
+//     	else
+//     	{
+//     		return collator.compare(this->getNome(), this->getNome()+this->getNome().length(), otherMidia.getNome(), otherMidia.getNome()+otherMidia.getNome().length());
+//     	}
+//     }
+// }

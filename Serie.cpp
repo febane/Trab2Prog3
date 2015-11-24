@@ -1,6 +1,8 @@
 #include<list>
 #include"Midia.cpp"
 
+using namespace std;
+
 class Serie : public Midia {
 
 private:

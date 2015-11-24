@@ -1,6 +1,8 @@
 #include<set>
 #include<string>
 
+using namespace std;
+
 class Pessoa {
 
 private:

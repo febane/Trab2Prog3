@@ -1,8 +1,11 @@
-#include<cstdio>
-#include<iostream>
-#include<cstdlib>
-#include<list>
-#include<map>
+#include <cstdio>
+#include <iostream>
+#include <cstdlib>
+#include <list>
+#include <map>
+#include <cstring>
+#include <string>
+//#include "Midia.cpp"
 
 using namespace std;
 
@@ -12,11 +15,11 @@ using namespace std;
  * @param param string a ser procurado no vetor
  * @return indice do string no vetor ou -1 caso nao foi encontrado
  */
-public static int isIn(char *args[], char param[]){
+int isIn(char *args[], char param[]){
 	
 	int i;
 	
-	for(i=0;i<strlen(args);i++)
+	for(i=0;i<sizeof(args);i++)
 		if(!strcmp(param,args[i]))
 			return i;
 	
@@ -32,14 +35,14 @@ public static int isIn(char *args[], char param[]){
  */
 int main(int argc, char *argv[]){
 	
-	list<Pessoa> p;
-	map<String,Genero> g;
-	list<Midia> m;
-	list<Emprestimo> e;
+	//list<Pessoa> p;
+	//map<String,Genero> g;
+	//list<Midia> m;
+	//list<Emprestimo> e;
 	bool ro;
 	int idx;
 	
-	if(isIn(args, "--write-only")!=-1){
+	if(isIn(argv, "--write-only")!=-1){
 		
 		//TODO
 		/*try{
@@ -67,12 +70,12 @@ int main(int argc, char *argv[]){
 	}
 	else{
 		
-		if(isIn(args, "--read-only")!=-1)
+		if(isIn(argv, "--read-only")!=-1)
 			ro = true;
 		else
 			ro = false;
 		
-		idx = isIn(args, "-g");
+		idx = isIn(argv, "-g");
 		if(idx!=-1){
 			
 			//TODO
@@ -80,7 +83,7 @@ int main(int argc, char *argv[]){
 			
 		}
 		
-		idx = isIn(args, "-p");
+		idx = isIn(argv, "-p");
 		if(idx!=-1){
 			
 			//TODO
@@ -88,7 +91,7 @@ int main(int argc, char *argv[]){
 			
 		}
 		
-		idx = isIn(args, "-m");
+		idx = isIn(argv, "-m");
 		if(idx!=-1){
 			
 			//TODO
@@ -104,7 +107,7 @@ int main(int argc, char *argv[]){
 			
 		}
 		
-		idx = isIn(args, "-e");
+		idx = isIn(argv, "-e");
 		if(idx!=-1){
 			
 			//TODO
