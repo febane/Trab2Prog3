@@ -1,29 +1,6 @@
-#include <string>
-#include <set>
-#include <locale>
-
-//#include "Midia.cpp"
-
-class Midia;
+#include"Genero.h"
 
 using namespace std;
-
-class Genero{
-
-private:
-	string sigla;
-	string nome;
-	set<Midia> midiasGenero;
-
-public:
-	Genero(string sigla, string nome);
-	string getSigla();
-	string getNome();
-	void addMidiaGen(Midia m);
-	int qtdGenero();
-	//int compareTo(Genero o);
-
-};
 
 /**
  * Construtor de Genero
@@ -55,10 +32,10 @@ string Genero::getNome() {
  * Adiciona midia com genero correspondente
  * @param m midia a ser adicionada
  */
-void Genero::addMidiaGen(Midia m)
-{
-	midiasGenero.insert(m);
-}
+//void Genero::addMidiaGen(Midia m)
+//{
+//	midiasGenero.insert(m);
+//}
 
 // /**
 //  * Retorna quantidade de generos

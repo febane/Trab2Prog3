@@ -1,11 +1,9 @@
-#include <cstdio>
-#include <iostream>
-#include <cstdlib>
-#include <list>
-#include <map>
-#include <cstring>
-#include <string>
-//#include "Midia.cpp"
+#include<iostream>
+#include<cstdlib>
+#include<list>
+#include<map>
+#include<cstring>
+#include"Midia.h"
 
 using namespace std;
 
@@ -36,8 +34,8 @@ int isIn(char *args[], char param[]){
 int main(int argc, char *argv[]){
 	
 	//list<Pessoa> p;
-	//map<String,Genero> g;
-	//list<Midia> m;
+	map<string,Genero> g;
+	list<Midia> m;
 	//list<Emprestimo> e;
 	bool ro;
 	int idx;
