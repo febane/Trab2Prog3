@@ -6,11 +6,10 @@
 #include <cstring>
 #include "Midia.h"
 #include "Genero.h"
-//#include "Pessoa.cpp"
 #include <vector>
 #include <cstring>
 #include "Pessoa.h"
-//using vector;
+
 using namespace std;
 
 class Genero;
@@ -91,7 +90,7 @@ map<int,Pessoa> static readPessoa(char *file)
 	if(!inFile) 
 	{
 		cout << "Não foi possivel abrir o arquivo de entrada : " << file << " Saindo do programa!\n";
-		return g;
+		return p;
 	}
 
 	getline(inFile,line);
@@ -141,4 +140,4 @@ map<int,Midia> static readMidia(char *file, map<int,Pessoa> lPessoas, map<string
 
 
 
-}*
+}*/

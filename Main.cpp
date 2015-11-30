@@ -1,11 +1,4 @@
-#include <iostream>
-#include <cstdlib>
-#include <list>
-#include <map>
-#include <cstring>
-#include "Midia.h"
 #include "FileIO.cpp"
-#include "Pessoa.h"
 
 using namespace std;
 // class Pessoa;

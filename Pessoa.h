@@ -1,4 +1,6 @@
+#include <set>
 #include <string>
+#include "Midia.h"
 
 #ifndef Pessoa_H
 #define Pessoa_H
@@ -18,10 +20,11 @@ public:
 	//Pessoa();
 	int getCodigo();
 	string getNome();
-	// void addMidia(Midia m);
+	void addMidia(Midia m);
 	// int qtdTrabalhos();
 	//set<Midia> getTrabalhos();
 	//int compareTo(Pessoa o);
 	
 };
+
 #endif

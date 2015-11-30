@@ -1,20 +1,4 @@
-#include<list>
-#include"Midia.cpp"
-
-using namespace std;
-
-class Filme : public Midia {
-
-private:
-	Pessoa diretor;
-	list<Pessoa> atores;
-	
-public:
-	Filme(int codigo, string nome, int tamanho, Genero genero, bool possui, bool consumiu, bool deseja, double preco, Pessoa diretor, list<Pessoa> atores);
-	Pessoa getDiretor();
-	list<Pessoa> getAtores();
-	
-};	
+#include "Filme.h"
 
 /**
  * Construtor de Filme
@@ -29,10 +13,9 @@ public:
  * @param diretor diretor do filme
  * @param atores lista de atores do filme
  */
-Filme::Filme(int codigo, string nome, int tamanho, Genero genero, bool possui, bool consumiu, bool deseja, double preco, Pessoa diretor, list<Pessoa> atores) {
-	Midia(codigo, nome, tamanho, genero, possui, consumiu, deseja, preco,'F');
-	this.diretor = diretor;
-	this.atores = atores;
+Filme::Filme(int codigo, string nome, int tamanho, Genero& genero, bool possui, bool consumiu, bool deseja, double preco, Pessoa& diretor, list<Pessoa> atores) : Midia(codigo, nome, tamanho, genero, possui, consumiu, deseja, preco,'F'), diretor(diretor) {
+	this->diretor = diretor;
+	this->atores = atores;
 }
 
 /**
@@ -47,6 +30,6 @@ Pessoa Filme::getDiretor() {
  * Pega atores
  * @return lista de atores do filme
  */
-list<Pessoa> Filme::getAtores() {
-	return atores;
-}
+// list<Pessoa> Filme::getAtores() {
+// 	return atores;
+// }

@@ -1,7 +1,7 @@
 CC=g++
 FLAGS= $(WARN) -O2 $G
 WARN= -Wall -Wextra
-SOURCES= Main.cpp Midia.cpp Genero.cpp FileIO.cpp Pessoa.cpp
+SOURCES= Main.cpp Midia.cpp Filme.cpp Genero.cpp FileIO.cpp Pessoa.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXEC=trab2
 
@@ -12,4 +12,4 @@ clean:
 	rm -f $(EXEC)
 
 debug:
-	$(CC) -o $(EXEC) $(SOURCES) $(FLAGS) -g
+	$(CC) -o $(EXEC) $(SOURCES) $(FLAGS) -g	
