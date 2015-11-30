@@ -9,11 +9,12 @@
 //#include "Pessoa.cpp"
 #include <vector>
 #include <cstring>
-
+#include "Pessoa.h"
 //using vector;
 using namespace std;
+
 class Genero;
-// class Pessoa;
+class Pessoa;
 
 /**
  * [StringSplit description]
@@ -74,30 +75,70 @@ map<string,Genero> static readGenero(char *file)
 }
 
 
-// /**
-//  * [readPessoa description]
-//  * @param  file [description]
-//  * @return      [description]
-//  */
-// map<int,Pessoa> static readPessoa(char *file)
-// {
-// 	map<int,Pessoa> p;
-// 	ifstream inFile(file);
-// 	string line;
-// 	vector<string> partes;
-// 	int count = 0;
+/**
+ * [readPessoa description]
+ * @param  file [description]
+ * @return      [description]
+ */
+map<int,Pessoa> static readPessoa(char *file)
+{
+	map<int,Pessoa> p;
+	ifstream inFile(file);
+	string line;
+	vector<string> partes;
+	int count = 0;
 
-// 	getline(inFile,line);
+	if(!inFile) 
+	{
+		cout << "Não foi possivel abrir o arquivo de entrada : " << file << " Saindo do programa!\n";
+		return g;
+	}
 
-// 	while(!inFile.eof())
-// 	{
-// 		getline(inFile,line);			
-// 		StringSplit(line,";",partes);
-// 		p.insert(pair<int,Pessoa>(partes[count],Pessoa(partes[count],partes[count+1])));	
-// 		count +=2;
-// 	}	
+	getline(inFile,line);
+
+	while(!inFile.eof())
+	{
+		getline(inFile,line);	
+		// cout << line << endl;		
+		StringSplit(line,";",partes);
+		if(count < partes.size())
+			p.insert(pair<int,Pessoa>(atoi(partes[count].c_str()),Pessoa(atoi(partes[count].c_str()),partes[count+1])));	
+
+		count +=2;
+	}	
+
+		//cout << count << endl;		
+
+	inFile.close();
+	return p;
+}
+
+/*
+map<int,Midia> static readMidia(char *file, map<int,Pessoa> lPessoas, map<string,Genero> lGenero)
+{
+	map<int,Midia> m;
+	ifstream inFile(file);
+	string line;
+	vector<string> partes;
+	int count = 0;
+
+	if(!inFile) 
+	{
+		cout << "Não foi possivel abrir o arquivo de entrada : " << file << " Saindo do programa!\n";
+		return g;
+	}
+
+	getline(inFile,line);
+
+	while(!inFile.eof())
+	{
+		getline(inFile,line);	
+		StringSplit(line,";",partes);
 
 
-// 	inFile.close();
-// 	return p;
-// }
+	}
+
+
+
+
+}*

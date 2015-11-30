@@ -5,10 +5,12 @@
 #include <cstring>
 #include "Midia.h"
 #include "FileIO.cpp"
-//#include "Pessoa.cpp"
+#include "Pessoa.h"
 
 using namespace std;
-
+// class Pessoa;
+// class Genero;
+// class Midia;
 /**
  * Verifica se um string pertence a um vetor de strings
  * @param args vetor de strings
@@ -36,7 +38,7 @@ int isIn(char *args[], char param[], int argc)
  */
 int main(int argc, char *argv[]){
 	
-	//list<Pessoa> p;
+	map<int,Pessoa> p;
 	map<string,Genero> g;
 	list<Midia> m;
 	//list<Emprestimo> e;
@@ -91,8 +93,9 @@ int main(int argc, char *argv[]){
 		if(idx!=-1){
 			
 			//TODO
-			//p = FileIO.readPessoa(new File(".").getCanonicalPath()+"/"+args[idx+1]);
 			
+			p = readPessoa(argv[idx+1]);
+			cout << p.find(30)->second.getNome() << "\n";
 		}
 		
 		idx = isIn(argv, (char*)"-m",argc);
