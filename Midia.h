@@ -2,6 +2,8 @@
 #include<cstdio>
 #include"Genero.h"
 
+#ifndef Midia_H
+#define Midia_H
 using namespace std;
 
 class Midia{
@@ -39,4 +41,4 @@ public:
 
 };
 
-//#endif
+#endif

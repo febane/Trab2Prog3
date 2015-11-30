@@ -1,5 +1,6 @@
-#include<string>
-
+#include <string>
+#ifndef Genero_H
+#define Genero_H
 using namespace std;
 
 class Genero{
@@ -18,3 +19,5 @@ public:
 	//int compareTo(Genero o);
 
 };
+
+#endif

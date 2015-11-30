@@ -1,9 +1,11 @@
-#include<iostream>
-#include<cstdlib>
-#include<list>
-#include<map>
-#include<cstring>
-#include"Midia.h"
+#include <iostream>
+#include <cstdlib>
+#include <list>
+#include <map>
+#include <cstring>
+#include "Midia.h"
+#include "FileIO.cpp"
+//#include "Pessoa.cpp"
 
 using namespace std;
 
@@ -13,18 +15,19 @@ using namespace std;
  * @param param string a ser procurado no vetor
  * @return indice do string no vetor ou -1 caso nao foi encontrado
  */
-int isIn(char *args[], char param[]){
+int isIn(char *args[], char param[], int argc)
+{
 	
 	int i;
+	//int n = sizeof(args);
 	
-	for(i=0;i<sizeof(args);i++)
+	for(i=0;i<argc;i++)
 		if(!strcmp(param,args[i]))
 			return i;
 	
 	return -1;
 	
 }
-
 /**
  * Metodo principal para execucao do programa
  * @param args argumentos passados por linha de comando
@@ -40,7 +43,7 @@ int main(int argc, char *argv[]){
 	bool ro;
 	int idx;
 	
-	if(isIn(argv, "--write-only")!=-1){
+	if(isIn(argv, (char*)"--write-only",argc)!=-1){
 		
 		//TODO
 		/*try{
@@ -68,20 +71,23 @@ int main(int argc, char *argv[]){
 	}
 	else{
 		
-		if(isIn(argv, "--read-only")!=-1)
+		if(isIn(argv, (char*)"--read-only",argc)!=-1)
 			ro = true;
 		else
 			ro = false;
 		
-		idx = isIn(argv, "-g");
+		idx = isIn(argv, (char*)"-g",argc);
 		if(idx!=-1){
 			
 			//TODO
 			//g = FileIO.readGenero(new File(".").getCanonicalPath()+"/"+args[idx+1]);
+			//cout << "OLA MUNDO\n" << endl;
+			g = readGenero(argv[idx+1]);
+			cout << g.find("CA")->second.getNome() << "\n";
 			
 		}
 		
-		idx = isIn(argv, "-p");
+		idx = isIn(argv, (char*)"-p",argc);
 		if(idx!=-1){
 			
 			//TODO
@@ -89,7 +95,7 @@ int main(int argc, char *argv[]){
 			
 		}
 		
-		idx = isIn(argv, "-m");
+		idx = isIn(argv, (char*)"-m",argc);
 		if(idx!=-1){
 			
 			//TODO
@@ -105,7 +111,7 @@ int main(int argc, char *argv[]){
 			
 		}
 		
-		idx = isIn(argv, "-e");
+		idx = isIn(argv, (char*)"-e",argc);
 		if(idx!=-1){
 			
 			//TODO
