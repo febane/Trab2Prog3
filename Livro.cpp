@@ -1,18 +1,4 @@
-#include<list>
-#include"Midia.cpp"
-
-using namespace std;
-
-class Livro : public Midia {
-
-private:
-	list<Pessoa> autores;
-	
-public:
-	Livro(int codigo, string nome, int tamanho, Genero genero, bool possui, bool consumiu, bool deseja, double preco, list<Pessoa> autores);
-	list<Pessoa> getAutores();
-	
-};
+#include "Livro.h"
 
 /**
  * Construtor de Livro
@@ -26,10 +12,8 @@ public:
  * @param preco preco do livro
  * @param autores lista de autores do livro
  */
-Livro::Livro(int codigo, string nome, int tamanho, Genero genero, bool possui, bool consumiu, bool deseja, double preco, list<Pessoa> autores) {
-	Midia(codigo, nome, tamanho, genero, possui, consumiu, deseja, preco, 'L');
-	this.autores = autores;
-
+Livro::Livro(int codigo, string nome, int tamanho, Genero& genero, bool possui, bool consumiu, bool deseja, double preco, list<Pessoa> autores) : Midia(codigo, nome, tamanho, genero, possui, consumiu, deseja, preco, 'L') {
+	this->autores = autores;
 }
 
 /**

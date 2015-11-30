@@ -1,9 +1,7 @@
 #include "FileIO.cpp"
 
 using namespace std;
-// class Pessoa;
-// class Genero;
-// class Midia;
+
 /**
  * Verifica se um string pertence a um vetor de strings
  * @param args vetor de strings

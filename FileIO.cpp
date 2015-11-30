@@ -4,11 +4,13 @@
 #include <map>
 #include <fstream>
 #include <cstring>
-#include "Midia.h"
+#include "Filme.h"
+#include "Livro.h"
+#include "Serie.h"
+#include "Emprestimo.h"
 #include "Genero.h"
 #include <vector>
 #include <cstring>
-#include "Pessoa.h"
 
 using namespace std;
 

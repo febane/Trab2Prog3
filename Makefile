@@ -1,7 +1,7 @@
 CC=g++
 FLAGS= $(WARN) -O2 $G
 WARN= -Wall -Wextra
-SOURCES= Main.cpp Midia.cpp Filme.cpp Genero.cpp FileIO.cpp Pessoa.cpp
+SOURCES= Main.cpp Midia.cpp Filme.cpp Livro.cpp Serie.cpp Emprestimo.cpp Genero.cpp FileIO.cpp Pessoa.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXEC=trab2
 

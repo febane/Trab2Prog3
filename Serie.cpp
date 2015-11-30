@@ -1,23 +1,5 @@
-#include<list>
-#include"Midia.cpp"
+#include "Serie.h"
 
-using namespace std;
-
-class Serie : public Midia {
-
-private:
-	list<Pessoa> atores;
-	string temporada;
-	string nameSerie;
-
-public:
-	Serie(int codigo, string nome, int tamanho, Genero genero, bool possui, bool consumiu, bool deseja, double preco, list<Pessoa> atores, string temporada, string nameSerie);
-	list<Pessoa> getAtores();
-	string getTemporada();
-	string getNomeSerie();
-	
-};
-	
 /**
  * Construtor de Serie
  * @param codigo codigo da serie
@@ -32,11 +14,10 @@ public:
  * @param temporada temporada da serie
  * @param nameSerie nome da serie
  */
-Serie::Serie(int codigo, string nome, int tamanho, Genero genero, bool possui, bool consumiu, bool deseja, double preco, list<Pessoa> atores, string temporada, string nameSerie) {
-	Midia(codigo, nome, tamanho, genero, possui, consumiu, deseja, preco, 'S');
-	this.atores = atores;
-	this.temporada = temporada;
-	this.nameSerie = nameSerie;
+Serie::Serie(int codigo, string nome, int tamanho, Genero& genero, bool possui, bool consumiu, bool deseja, double preco, list<Pessoa> atores, string temporada, string nameSerie) : Midia(codigo, nome, tamanho, genero, possui, consumiu, deseja, preco, 'S') {
+	this->atores = atores;
+	this->temporada = temporada;
+	this->nameSerie = nameSerie;
 }
 
 /**
