@@ -17,7 +17,7 @@ private:
 	
 public:
 	Pessoa(int codigo, string nome);
-	//Pessoa();
+	Pessoa();
 	int getCodigo();
 	string getNome();
 	void addMidia(Midia m);

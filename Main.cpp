@@ -31,8 +31,8 @@ int main(int argc, char *argv[]){
 	
 	map<int,Pessoa> p;
 	map<string,Genero> g;
-	list<Midia> m;
-	//list<Emprestimo> e;
+	map<int,Midia> m;
+	map<int,Emprestimo> e;
 	bool ro;
 	int idx;
 	
@@ -93,15 +93,17 @@ int main(int argc, char *argv[]){
 		if(idx!=-1){
 			
 			//TODO
-			/*m = FileIO.readMidia(new File(".").getCanonicalPath()+"/"+args[idx+1],p,g);
-			
-			if(!ro){
+			//m = FileIO.readMidia(new File(".").getCanonicalPath()+"/"+args[idx+1],p,g);
+			m = readMidia(argv[idx+1],p,g);
+			cout << m.find(16)->second.getNome() << "\n";
+
+			// if(!ro){
 				
-				FileIO.generatorWishList(m);
-				FileIO.writeMidiaPessoas(m,p);
-				FileIO.generatorEstatisticas(m, g);
+			// 	FileIO.generatorWishList(m);
+			// 	FileIO.writeMidiaPessoas(m,p);
+			// 	FileIO.generatorEstatisticas(m, g);
 				
-			}*/
+			// }*/
 			
 		}
 		
@@ -109,13 +111,15 @@ int main(int argc, char *argv[]){
 		if(idx!=-1){
 			
 			//TODO
-			/*e = FileIO.readEmprestimos(new File(".").getCanonicalPath()+"/"+args[idx+1], m);
+			e = readEmprestimo(argv[idx+1]);
+			//cout << e.find(17)->second.getTomador(	)<< " - "<<e.find(17)->second.getDevolucao()->tm_mday << "/" << e.find(17)->second.getEmprestimo()->tm_mon << "/"<< e.find(17)->second.getEmprestimo()->tm_year<< "\n";
 			
-			if(!ro){
+			
+			// if(!ro){
 				
-				FileIO.writeEmprestimos(e);
+			// 	FileIO.writeEmprestimos(e);
 				
-			}*/
+			// }
 			
 		}
 		

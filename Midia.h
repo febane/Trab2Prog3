@@ -21,7 +21,7 @@ private:
 
 public:
 	Midia(int codigo, string nome, int tamanho, Genero& genero, bool possui, bool consumiu, bool deseja, double preco, char type);
-	//Midia();
+	Midia();
 	char getType();
 	void setType(char type);
 	int getCodigo();

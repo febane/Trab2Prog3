@@ -1,4 +1,4 @@
-#include"Midia.h"
+#include "Midia.h"
 
 using namespace std;
 
@@ -25,6 +25,7 @@ Midia::Midia(int codigo, string nome, int tamanho, Genero& genero, bool possui, 
 	this->type = type;
 }
 
+Midia::Midia():genero(genero){}
 /**
  * Construtor de Midia
  */

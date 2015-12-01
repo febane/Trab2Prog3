@@ -12,7 +12,7 @@ Pessoa::Pessoa(int codigo, string nome) {
 /**
  * Construtor de Pessoa
  */
-//Pessoa::Pessoa(){}
+Pessoa::Pessoa(){}
 
 /**
  * Pegar codigo de Pessoa
