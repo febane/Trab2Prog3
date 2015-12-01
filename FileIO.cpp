@@ -183,7 +183,6 @@ map<int,Midia> static readMidia(char *file, map<int,Pessoa> lPessoas, map<string
 		elenco = createlAtores(partes[4],lPessoas);
 		int tamanho = atoi(partes[5].c_str());
 		string gen = partes[6];
-		Genero gnr = lGenero.find(gen)->second;
 		string serie = partes[7];
 		string temporada = partes[8];
 		bool possui = !partes[9].compare("x");
@@ -195,13 +194,13 @@ map<int,Midia> static readMidia(char *file, map<int,Pessoa> lPessoas, map<string
 		switch(type)
 		{
 			case 'L':
-				m.insert(pair<int,Midia>(codigo,Livro(codigo,nome,tamanho,gnr,possui,consumiu,deseja,preco,elenco)));
+				m.insert(pair<int,Midia>(codigo,Livro(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco)));
 				break;
 			case 'F':
-				m.insert(pair<int,Midia>(codigo,Filme(codigo,nome,tamanho,gnr,possui,consumiu,deseja,preco,diretor,elenco)));
+				m.insert(pair<int,Midia>(codigo,Filme(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,diretor,elenco)));
 				break;
 			case 'S': 
-				m.insert(pair<int,Midia>(codigo,Serie(codigo,nome,tamanho,gnr,possui,consumiu,deseja,preco,elenco,temporada,serie)));
+				m.insert(pair<int,Midia>(codigo,Serie(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco,temporada,serie)));
 				break;
 		}
 		elenco.clear();		
@@ -264,11 +263,11 @@ map<int,Emprestimo> static readEmprestimo(char *file)
 
 vector<Midia> static mapToVectorMidia(map<int,Midia>m,vector<Midia>& l)
 {
-
 	for (map<int,Midia>::iterator it=m.begin(); it!=m.end(); ++it)
 	{
-		//cout << it->second.getNome()<< endl;
-		//l.push_back(it->second);_
+		// m = it->second;
+		cout << it->second.getGenero().getSigla()<< endl;
+		//l.push_back(Midia(it->second.getCodigo(),it->second.getNome(),it->second.getTamanho(),*it->second.getGenero(),it->second.isPossui(),it->second.isConsumiu(),it->second.isDeseja(),it->second.getPreco(),it->second.getType()));_
 	}
 	return l;
 }
@@ -279,7 +278,10 @@ void static generatorWishList(map<int,Midia> m)
 	ofstream outFile("4-wishlist.csv");
 	vector<Midia> lMidias;
 	outFile << "Tipo;Mídia;Gênero;Preço" << endl;
-	mapToVectorMidia(m,lMidias);
+	//mapToVectorMidia(m,lMidias);
+	cout << m.find(5)->second.getGenero().getSigla() << "\n";
+	cout << m.find(5)->second.getGenero().getNome() << "\n";
+
 	/* TEMOS QUE ORDENAR O VETOR DA FORMA QUE O PROFESSOR QUER !!! */
 	for(unsigned int i = 0; i < lMidias.size(); i++)
 	{

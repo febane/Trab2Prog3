@@ -95,7 +95,7 @@ int main(int argc, char *argv[]){
 			//TODO
 			//m = FileIO.readMidia(new File(".").getCanonicalPath()+"/"+args[idx+1],p,g);
 			m = readMidia(argv[idx+1],p,g);
-			cout << m.find(16)->second.getNome() << "\n";
+			cout << m.find(19)->second.getGenero().getNome() << "\n";
 			generatorWishList(m);
 
 			// if(!ro){
