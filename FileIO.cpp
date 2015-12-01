@@ -207,6 +207,7 @@ map<int,Midia> static readMidia(char *file, map<int,Pessoa> lPessoas, map<string
 		elenco.clear();		
 		partes.clear();
 	}
+	inFile.close();
 
 	return m;
 
@@ -257,6 +258,46 @@ map<int,Emprestimo> static readEmprestimo(char *file)
 		e.insert(pair<int,Emprestimo>(codigo,Emprestimo(codigo,nome,dateEmp,dateDev)));
 		partes.clear();
 	}
-
+	inFile.close();
 	return e;
+}
+
+vector<Midia> static mapToVectorMidia(map<int,Midia>m,vector<Midia>& l)
+{
+
+	for (map<int,Midia>::iterator it=m.begin(); it!=m.end(); ++it)
+	{
+		//cout << it->second.getNome()<< endl;
+		//l.push_back(it->second);_
+	}
+	return l;
+}
+
+
+void static generatorWishList(map<int,Midia> m)
+{
+	ofstream outFile("4-wishlist.csv");
+	vector<Midia> lMidias;
+	outFile << "Tipo;Mídia;Gênero;Preço" << endl;
+	mapToVectorMidia(m,lMidias);
+	/* TEMOS QUE ORDENAR O VETOR DA FORMA QUE O PROFESSOR QUER !!! */
+	for(unsigned int i = 0; i < lMidias.size(); i++)
+	{
+		if(lMidias[i].isDeseja())
+		{
+			switch(lMidias[i].getType())
+			{
+				case 'L': outFile << "Livro;" << lMidias[i].getNome() <<";"<< lMidias[i].getGenero().getNome()<<";"<<lMidias[i].getPreco()<< endl;
+					break;
+				case 'F': outFile << "Filme;" << lMidias[i].getNome() <<";"<< lMidias[i].getGenero().getNome()<<";"<<lMidias[i].getPreco() << endl;
+					break;
+				case 'S': outFile << "Série;" << lMidias[i].getNome() <<";"<< lMidias[i].getGenero().getNome()<<";"<<lMidias[i].getPreco() << endl;
+					break;
+				
+			}
+		}
+	}
+
+	outFile.close();
+
 }
