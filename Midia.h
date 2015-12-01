@@ -13,7 +13,7 @@ private:
 	string nome;
 	char type;
 	int tamanho;
-	Genero& genero;
+	Genero genero;
 	bool possui;
 	bool consumiu;
 	bool deseja;

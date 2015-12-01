@@ -8,8 +8,6 @@
 #include "Livro.h"
 #include "Serie.h"
 #include "Emprestimo.h"
-#include "Genero.h"
-#include "Midia.h"
 #include <vector>
 #include <cstring>
 #include <algorithm>
@@ -173,14 +171,15 @@ map<int,Midia> static readMidia(char *file, map<int,Pessoa> lPessoas, map<string
 		string nome = partes[1];
 		char type = partes[2].at(0);
 		string dir = partes[3];
-		if(!dir.compare(""))
+		if(dir.length()>0)
 		{
 		 	int id = atoi(dir.c_str());
 		 	diretor = lPessoas.find(id)->second;
 		}
 		 //string lAutores = partes[4];		 
 		/** LER LISTA DE AUTORES */
-		elenco = createlAtores(partes[4],lPessoas);
+		if(partes[4].length()>0)
+			elenco = createlAtores(partes[4],lPessoas);
 		int tamanho = atoi(partes[5].c_str());
 		string gen = partes[6];
 		string serie = partes[7];
@@ -264,11 +263,8 @@ map<int,Emprestimo> static readEmprestimo(char *file)
 vector<Midia> static mapToVectorMidia(map<int,Midia>m,vector<Midia>& l)
 {
 	for (map<int,Midia>::iterator it=m.begin(); it!=m.end(); ++it)
-	{
-		// m = it->second;
-		cout << it->second.getGenero().getSigla()<< endl;
-		//l.push_back(Midia(it->second.getCodigo(),it->second.getNome(),it->second.getTamanho(),*it->second.getGenero(),it->second.isPossui(),it->second.isConsumiu(),it->second.isDeseja(),it->second.getPreco(),it->second.getType()));_
-	}
+		l.push_back(it->second);
+	
 	return l;
 }
 
@@ -278,9 +274,7 @@ void static generatorWishList(map<int,Midia> m)
 	ofstream outFile("4-wishlist.csv");
 	vector<Midia> lMidias;
 	outFile << "Tipo;Mídia;Gênero;Preço" << endl;
-	//mapToVectorMidia(m,lMidias);
-	cout << m.find(5)->second.getGenero().getSigla() << "\n";
-	cout << m.find(5)->second.getGenero().getNome() << "\n";
+	mapToVectorMidia(m,lMidias);
 
 	/* TEMOS QUE ORDENAR O VETOR DA FORMA QUE O PROFESSOR QUER !!! */
 	for(unsigned int i = 0; i < lMidias.size(); i++)

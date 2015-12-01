@@ -76,7 +76,7 @@ int main(int argc, char *argv[]){
 			//g = FileIO.readGenero(new File(".").getCanonicalPath()+"/"+args[idx+1]);
 			//cout << "OLA MUNDO\n" << endl;
 			g = readGenero(argv[idx+1]);
-			cout << g.find("CA")->second.getNome() << "\n";
+			//cout << g.find("CA")->second.getNome() << "\n";
 			
 		}
 		
@@ -86,7 +86,8 @@ int main(int argc, char *argv[]){
 			//TODO
 			
 			p = readPessoa(argv[idx+1]);
-			cout << p.find(30)->second.getNome() << "\n";
+			//cout << p.find(30)->second.getNome() << "\n";
+			
 		}
 		
 		idx = isIn(argv, (char*)"-m",argc);
@@ -95,7 +96,7 @@ int main(int argc, char *argv[]){
 			//TODO
 			//m = FileIO.readMidia(new File(".").getCanonicalPath()+"/"+args[idx+1],p,g);
 			m = readMidia(argv[idx+1],p,g);
-			cout << m.find(19)->second.getGenero().getNome() << "\n";
+			//cout << m.find(19)->second.getGenero().getNome() << "\n";
 			generatorWishList(m);
 
 			// if(!ro){
