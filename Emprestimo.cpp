@@ -7,7 +7,7 @@
  * @param emprestimo data de emprestimo
  * @param devolucao data de devolucao
  */
-Emprestimo::Emprestimo(int codigomidia, string tomador, struct tm *emprestimo, struct tm *devolucao) {
+Emprestimo::Emprestimo(int codigomidia, string tomador, struct tm emprestimo, struct tm devolucao) {
 	this->codigomidia = codigomidia;
 	this->tomador = tomador;
 	this->emprestimo = emprestimo;
@@ -34,7 +34,7 @@ string Emprestimo::getTomador() {
  * Pega data de emprestimo
  * @return data de emprestimo
  */
-struct tm *Emprestimo::getEmprestimo() {
+struct tm Emprestimo::getEmprestimo() {
 	return emprestimo;
 }
 
@@ -42,7 +42,7 @@ struct tm *Emprestimo::getEmprestimo() {
  * Pega data de devolucao
  * @return data de devolucao
  */
-struct tm *Emprestimo::getDevolucao() {
+struct tm Emprestimo::getDevolucao() {
 	return devolucao;
 }
 

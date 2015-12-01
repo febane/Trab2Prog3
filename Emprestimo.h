@@ -9,15 +9,15 @@ class Emprestimo{
 private:
 	int codigomidia;
 	string tomador;
-	struct tm *emprestimo;
-	struct tm *devolucao;
+	struct tm emprestimo;
+	struct tm devolucao;
 
 public:
-	Emprestimo(int codigomidia, string tomador, struct tm *emprestimo, struct tm *devolucao);
+	Emprestimo(int codigomidia, string tomador, struct tm emprestimo, struct tm devolucao);
 	int getMidia();
 	string getTomador();
-	struct tm *getEmprestimo();
-	struct tm *getDevolucao();
+	struct tm getEmprestimo();
+	struct tm getDevolucao();
 	int compareTo(Emprestimo arg0);
 	
 };

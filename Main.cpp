@@ -114,7 +114,7 @@ int main(int argc, char *argv[]){
 			
 			//TODO
 			e = readEmprestimo(argv[idx+1]);
-			//cout << e.find(17)->second.getTomador(	)<< " - "<<e.find(17)->second.getDevolucao()->tm_mday << "/" << e.find(17)->second.getEmprestimo()->tm_mon << "/"<< e.find(17)->second.getEmprestimo()->tm_year<< "\n";
+			//cout << e.find(16)->second.getTomador(	)<< " - "<<e.find(16)->second.getEmprestimo().tm_mday << "/" << e.find(16)->second.getEmprestimo().tm_mon << "/"<< e.find(16)->second.getEmprestimo().tm_year<< "\n";
 			
 			
 			// if(!ro){

@@ -226,7 +226,7 @@ map<int,Emprestimo> static readEmprestimo(char *file)
 	string line;
 	vector<string> partes;
 	vector<string>data;
-	tm *dateEmp, *dateDev;
+	struct tm dateEmp, dateDev, *p;
 
 	getline(inFile,line);
 	time(&t);
@@ -238,21 +238,23 @@ map<int,Emprestimo> static readEmprestimo(char *file)
 		string nome = partes[1];
 		StringSplit(partes[2],"/",data);
 		
-		dateEmp = localtime(&t);
-		dateEmp->tm_year = atoi(data[2].c_str());
-		dateEmp->tm_mon = atoi(data[1].c_str());
-		dateEmp->tm_mday = atoi(data[0].c_str());
+		p = localtime(&t);
+		dateEmp = *p;
+		dateEmp.tm_year = atoi(data[2].c_str());
+		dateEmp.tm_mon = atoi(data[1].c_str());
+		dateEmp.tm_mday = atoi(data[0].c_str());
 		data.clear();
 		StringSplit(partes[3],"/",data);
-		dateDev = localtime(&f);
-		dateDev->tm_year = atoi(data[2].c_str());
-		dateDev->tm_mon = atoi(data[1].c_str());
-		dateDev->tm_mday = atoi(data[0].c_str());
+		p = localtime(&f);
+		dateDev = *p;
+		dateDev.tm_year = atoi(data[2].c_str());
+		dateDev.tm_mon = atoi(data[1].c_str());
+		dateDev.tm_mday = atoi(data[0].c_str());
 		data.clear();
-		mktime(dateEmp);
-		mktime(dateEmp);
-		//cout << codigo << " - " << dateEmp->tm_mday << "/" << dateEmp->tm_mon << "/" << dateEmp->tm_year << endl;
-		cout << codigo << " - " << dateDev->tm_mday << "/" << dateDev->tm_mon << "/" << dateDev->tm_year << endl;
+		mktime(&dateEmp);
+		mktime(&dateDev);
+		//cout << codigo << " - " << dateEmp.tm_mday << "/" << dateEmp.tm_mon << "/" << dateEmp.tm_year << endl;
+		//cout << codigo << " - " << dateDev.tm_mday << "/" << dateDev.tm_mon << "/" << dateDev.tm_year << endl;
 		e.insert(pair<int,Emprestimo>(codigo,Emprestimo(codigo,nome,dateEmp,dateDev)));
 		partes.clear();
 	}
