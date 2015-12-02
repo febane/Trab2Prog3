@@ -12,7 +12,6 @@ int isIn(char *args[], char param[], int argc)
 {
 	
 	int i;
-	//int n = sizeof(args);
 	
 	for(i=0;i<argc;i++)
 		if(!strcmp(param,args[i]))
@@ -96,16 +95,18 @@ int main(int argc, char *argv[]){
 			//TODO
 			//m = FileIO.readMidia(new File(".").getCanonicalPath()+"/"+args[idx+1],p,g);
 			m = readMidia(argv[idx+1],p,g);
-			//cout << m.find(19)->second.getGenero().getNome() << "\n";
-			generatorWishList(m);
+			//cout << m.find(19)->second.getGenero().getNome() << "\
 
-			// if(!ro){
+			if(!ro){
+			
+			generatorWishList(m);
+			generatorPorPessoa(p, m);
 				
 			// 	FileIO.generatorWishList(m);
 			// 	FileIO.writeMidiaPessoas(m,p);
 			// 	FileIO.generatorEstatisticas(m, g);
 				
-			// }*/
+			}
 			
 		}
 		

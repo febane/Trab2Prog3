@@ -328,3 +328,36 @@ void static generatorEmprestimos(map<int,Emprestimo> e){
 	}
 	
 }
+
+
+void static generatorPorPessoa(map<int,Pessoa> p, map<int,Midia> m){
+	
+	ofstream outFile("2-porpessoa.csv");
+	outFile<<"Pessoa;Produção"<<endl;
+	
+	for (map<int, Pessoa>::iterator it = p.begin(); it != p.end(); ++it){
+		
+		//outFile<<it->second.getNome()<<";";
+		
+		for (map<int, Midia>::iterator it2 = m.begin(); it2 != m.end(); ++it2)
+			switch(it2->second.getCodigo()){
+				
+				case 'F':
+					//TODO
+					//if(((Filme)it2->second).getDiretor()==it->second.getNome())
+						//outFile<<it2->second.getNome()<<",";
+					break;
+				case 'L':
+					//TODO
+					break;
+				case 'S':
+					//TODO
+					break;
+				
+			}
+		
+		//outFile<<endl;
+		
+	}
+	
+}
