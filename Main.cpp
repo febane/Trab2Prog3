@@ -112,16 +112,10 @@ int main(int argc, char *argv[]){
 		idx = isIn(argv, (char*)"-e",argc);
 		if(idx!=-1){
 			
-			//TODO
 			e = readEmprestimo(argv[idx+1]);
-			//cout << e.find(16)->second.getTomador(	)<< " - "<<e.find(16)->second.getEmprestimo().tm_mday << "/" << e.find(16)->second.getEmprestimo().tm_mon << "/"<< e.find(16)->second.getEmprestimo().tm_year<< "\n";
 			
-			
-			// if(!ro){
-				
-			// 	FileIO.writeEmprestimos(e);
-				
-			// }
+			if(!ro)
+				generatorEmprestimos(e);
 			
 		}
 		

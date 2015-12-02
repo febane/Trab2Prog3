@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <cstdlib>
 #include <list>
 #include <map>
@@ -226,7 +227,7 @@ map<int,Emprestimo> static readEmprestimo(char *file)
 	string line;
 	vector<string> partes;
 	vector<string>data;
-	struct tm dateEmp, dateDev, *p;
+	struct tm dateEmp, dateDev;
 
 	getline(inFile,line);
 	time(&t);
@@ -238,15 +239,15 @@ map<int,Emprestimo> static readEmprestimo(char *file)
 		string nome = partes[1];
 		StringSplit(partes[2],"/",data);
 		
-		p = localtime(&t);
-		dateEmp = *p;
+		dateEmp = *localtime(&t);
+		dateEmp.tm_sec = 0; dateEmp.tm_min = 0; dateEmp.tm_hour = 0;
 		dateEmp.tm_year = atoi(data[2].c_str());
 		dateEmp.tm_mon = atoi(data[1].c_str());
 		dateEmp.tm_mday = atoi(data[0].c_str());
 		data.clear();
 		StringSplit(partes[3],"/",data);
-		p = localtime(&f);
-		dateDev = *p;
+		dateDev = *localtime(&f);
+		dateDev.tm_sec = 0; dateDev.tm_min = 0; dateDev.tm_hour = 0;
 		dateDev.tm_year = atoi(data[2].c_str());
 		dateDev.tm_mon = atoi(data[1].c_str());
 		dateDev.tm_mday = atoi(data[0].c_str());
@@ -298,4 +299,32 @@ void static generatorWishList(map<int,Midia> m)
 
 	outFile.close();
 
+}
+
+
+void static generatorEmprestimos(map<int,Emprestimo> e){
+	
+	ofstream outFile("3-emprestimos.csv");
+	outFile<<"Data;Tomador;Atrasado?;Dias de Atraso"<<endl;
+	time_t tempo;
+	struct tm hj, a;
+	int dif;
+	
+	hj = *localtime(&tempo);
+	hj.tm_hour = 0; hj.tm_min = 0; hj.tm_sec = 0; hj.tm_mday = 6; hj.tm_mon = 11; hj.tm_year = 2015;
+	
+	for (map<int, Emprestimo>::iterator it = e.begin(); it != e.end(); ++it){
+		
+		outFile<<setfill('0')<<setw(2)<<it->second.getEmprestimo().tm_mday<<"/"<<setfill('0')<<setw(2)<<it->second.getEmprestimo().tm_mon<<"/"<<it->second.getEmprestimo().tm_year<<";"<<it->second.getTomador()<<";";
+		
+		a = it->second.getDevolucao();
+		dif = difftime(mktime(&hj),mktime(&a));
+		
+		if(dif>0)
+			outFile<<"Sim;"<<dif/86400<<endl;
+		else
+			outFile<<"Não;0"<<endl;
+		
+	}
+	
 }
