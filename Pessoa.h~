@@ -23,7 +23,7 @@ public:
 	string getNome();
 	//void addMidia(Midia m);
 	// int qtdTrabalhos();
-	list<Midia> getTrabalhos();
+	set<Midia> getTrabalhos();
 	//int compareTo(Pessoa o);
 	void addMidia(Midia& midia);
 	
