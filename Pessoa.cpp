@@ -34,10 +34,10 @@ string Pessoa::getNome() {
  * Adicionar midia a pessoa
  * @param m midia a ser adicionada
  */
-// void Pessoa::addMidia(Midia m)
-// {
-// 	this->trabalhos.insert(m);
-// }
+void Pessoa::addMidia(Midia& midia):midia(midia)
+{
+	this->trabalhos.insert(midia);
+}
 
 /**
  * Pegar quantidade de midias relacionadas a pessoa
@@ -52,9 +52,9 @@ string Pessoa::getNome() {
  * Pega lista de midias feitas pela pessoa
  * @return conjunto de midias realizadas por pessoa
  */
-// set<Midia> Pessoa::getTrabalhos() {
-// 	return trabalhos;
-// }
+set<Midia> Pessoa::getTrabalhos() {
+ 	return trabalhos;
+}
 
 /*
 int Pessoa::compareTo(Pessoa o) {

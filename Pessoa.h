@@ -13,7 +13,7 @@ class Pessoa {
 private:
 	int codigo;
 	string nome;
-	//set<Midia> trabalhos;
+	set<Midia> trabalhos;
 	
 public:
 	Pessoa(int codigo, string nome);
@@ -22,8 +22,9 @@ public:
 	string getNome();
 	void addMidia(Midia m);
 	// int qtdTrabalhos();
-	//set<Midia> getTrabalhos();
+	set<Midia> getTrabalhos();
 	//int compareTo(Pessoa o);
+	addMidia(Midia& midia);
 	
 };
 

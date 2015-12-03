@@ -205,6 +205,7 @@ map<int,Midia> static readMidia(char *file, map<int,Pessoa> lPessoas, map<string
 		}
 		elenco.clear();		
 		partes.clear();
+
 	}
 	inFile.close();
 
@@ -296,7 +297,7 @@ void static generatorWishList(map<int,Midia> m)
 			}
 		}
 	}
-
+	lMidias.clear();
 	outFile.close();
 
 }
@@ -329,34 +330,50 @@ void static generatorEmprestimos(map<int,Emprestimo> e){
 	
 }
 
+vector<Pessoa> static mapToVectorPessoa(map<int,Pessoa>p,vector<Pessoa>& l)
+{
+	for (map<int,Pessoa>::iterator it=p.begin(); it!=p.end(); ++it)
+		l.push_back(it->second);
+	
+	return l;
+}
 
 void static generatorPorPessoa(map<int,Pessoa> p, map<int,Midia> m){
 	
 	ofstream outFile("2-porpessoa.csv");
 	outFile<<"Pessoa;Produção"<<endl;
+	//vector<Midia> lMidias;
+	vector<Pessoa> lPessoas;
+
+
+	mapToVectorPessoa(p,lPessoas);
+	//mapToVectorMidia();
+	//cout << lPessoas[0].getNome() << endl;
 	
-	for (map<int, Pessoa>::iterator it = p.begin(); it != p.end(); ++it){
-		
-		//outFile<<it->second.getNome()<<";";
+	// for (map<int, Pessoa>::iterator it = p.begin(); it != p.end(); ++it){
+	for(unsigned i = 0; i < lPessoas.size();i++)
+	{
+		outFile << lPessoas[i].getNome() << endl;//<<";";
 		
 		for (map<int, Midia>::iterator it2 = m.begin(); it2 != m.end(); ++it2)
-			switch(it2->second.getCodigo()){
+		{
+			// switch(it2->second.getType()){
 				
-				case 'F':
-					//TODO
-					//if(((Filme)it2->second).getDiretor()==it->second.getNome())
-						//outFile<<it2->second.getNome()<<",";
-					break;
-				case 'L':
-					//TODO
-					break;
-				case 'S':
-					//TODO
-					break;
+			// 	case 'F':
+			// 		//TODO
+			// 		//if(((Filme)it2->second).getDiretor()==it->second.getNome())
+			// 			//outFile<<it2->second.getNome()<<",";
+			// 		break;
+			// 	case 'L':
+			// 		//TODO
+			// 		break;
+			// 	case 'S':
+			// 		//TODO
+			// 		break;
 				
-			}
-		
-		//outFile<<endl;
+			// }
+		}
+		// outFile<<endl;
 		
 	}
 	

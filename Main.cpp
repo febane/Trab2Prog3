@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
 	bool ro;
 	int idx;
 	
-	if(isIn(argv, (char*)"--write-only",argc)!=-1){
+	// if(isIn(argv, (char*)"--write-only",argc)!=-1){
 		
 		//TODO
 		/*try{
@@ -60,13 +60,13 @@ int main(int argc, char *argv[]){
 			ex.printStackTrace();
 		}*/
 		
-	}
-	else{
+	// }
+	// else{
 		
-		if(isIn(argv, (char*)"--read-only",argc)!=-1)
-			ro = true;
-		else
-			ro = false;
+	// 	if(isIn(argv, (char*)"--read-only",argc)!=-1)
+	// 		ro = true;
+	// 	else
+	// 		ro = false;
 		
 		idx = isIn(argv, (char*)"-g",argc);
 		if(idx!=-1){
@@ -120,7 +120,7 @@ int main(int argc, char *argv[]){
 			
 		}
 		
-		if(ro){
+		// if(ro){
 			
 			//TODO
 			/*try{
@@ -139,8 +139,8 @@ int main(int argc, char *argv[]){
 				ex.printStackTrace();
 			}*/
 			
-		}
+		// }
 		
-	}
+	// }
 
 }

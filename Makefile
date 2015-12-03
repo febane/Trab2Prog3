@@ -6,7 +6,7 @@ OBJECTS=$(SOURCES:.cpp=.o)
 EXEC=trab2
 
 all:
-	$(CC) -o $(EXEC) $(SOURCES) $(FLAGS) 
+	$(CC) -o $(EXEC) $(SOURCES) #$(FLAGS) 
 
 clean:
 	rm -f $(EXEC)
