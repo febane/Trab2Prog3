@@ -123,7 +123,7 @@ map<int,Pessoa> static readPessoa(char *file)
  * @param  l          [description]
  * @return            [description]
  */
-vector<Pessoa> static createlAtores(string codAutores, map<int,Pessoa> l)
+vector<Pessoa> static createlAtores(string codAutores, map<int,Pessoa>& l)
 {
 	vector<Pessoa> autores;
 	vector<string> partes;
@@ -145,12 +145,13 @@ vector<Pessoa> static createlAtores(string codAutores, map<int,Pessoa> l)
  * @param  m [description]
  * @return   [description]
  */
-void static relationPessoaMidia(vector<Pessoa>& p, Midia& m)
+void static relationPessoaMidia(vector<Pessoa>& p, Midia& m,map<int,Pessoa>& lPessoas)
 {
 	for(unsigned int i =0; i < p.size();i++)
 	{
-		p[i].addMidia(m);
-		cout << p[i].getNome() << endl;
+		lPessoas.find(p[i].getCodigo())->second.addMidia(m);
+		//p[i].addMidia(m);
+		//cout << p[i].getNome() << endl;
 		// cout << p[i].getTrabalhos()[0].getNome()<< endl;
 	}
 
@@ -225,7 +226,7 @@ map<int,Midia> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<strin
 		{
 			case 'L':
 				m.insert(pair<int,Midia>(codigo,Livro(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco)));
-				relationPessoaMidia(elenco,m.find(codigo)->second);
+				relationPessoaMidia(elenco,m.find(codigo)->second,lPessoas);
 				// for(unsigned int i =0; i < elenco.size();i++)
 				     // elenco[i].addMidia(m.find(codigo)->second);
 					// cout << p[i].getTrabalhos()[0].getNome()<< endl;
@@ -235,11 +236,11 @@ map<int,Midia> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<strin
 				break;
 			case 'F':
 				m.insert(pair<int,Midia>(codigo,Filme(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,diretor,elenco)));
-				relationPessoaMidia(elenco,m.find(codigo)->second);
+				relationPessoaMidia(elenco,m.find(codigo)->second,lPessoas);
 				break;
 			case 'S': 
 				m.insert(pair<int,Midia>(codigo,Serie(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco,temporada,serie)));
-				relationPessoaMidia(elenco,m.find(codigo)->second);
+				relationPessoaMidia(elenco,m.find(codigo)->second,lPessoas);
 				break;
 		}
 		// printVector(elenco);
@@ -398,7 +399,7 @@ void static generatorPorPessoa(map<int,Pessoa> p){
 		if(lPessoas[i].getTrabalhos().size() > 0)
 		{
 			outFile << lPessoas[i].getNome() <<";";//<<";";
-			for(j = 0; i < lPessoas[i].getTrabalhos().size()-1; j++)
+			for(j = 0; j < lPessoas[i].getTrabalhos().size()-1; j++)
 			{
 				outFile << (lPessoas[i].getTrabalhos())[j].getNome() << ",";
 			}
