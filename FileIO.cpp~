@@ -390,9 +390,10 @@ void static generatorPorPessoa(map<int,Pessoa> p){
 	
 	for(unsigned i = 0; i < lPessoas.size();i++)
 	{
+		//cout << lPessoas[i].getTrabalhos().size() << endl; 
 		if(lPessoas[i].getTrabalhos().size() > 0)
 		{
-			outFile << lPessoas[i].getNome() <<";";
+			outFile << lPessoas[i].getNome() <<";";//<<";";
 			for(j = 0; j < lPessoas[i].getTrabalhos().size()-1; j++)
 			{
 				outFile << (lPessoas[i].getTrabalhos())[j].getNome() << ",";
