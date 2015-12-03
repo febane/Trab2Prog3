@@ -100,7 +100,7 @@ int main(int argc, char *argv[]){
 			if(!ro){
 			
 			generatorWishList(m);
-			generatorPorPessoa(p, m);
+			generatorPorPessoa(p);
 				
 			// 	FileIO.generatorWishList(m);
 			// 	FileIO.writeMidiaPessoas(m,p);

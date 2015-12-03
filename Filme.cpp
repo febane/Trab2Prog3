@@ -13,7 +13,7 @@
  * @param diretor diretor do filme
  * @param atores lista de atores do filme
  */
-Filme::Filme(int codigo, string nome, int tamanho, Genero& genero, bool possui, bool consumiu, bool deseja, double preco, Pessoa& diretor, list<Pessoa> atores) : Midia(codigo, nome, tamanho, genero, possui, consumiu, deseja, preco,'F'), diretor(diretor) {
+Filme::Filme(int codigo, string nome, int tamanho, Genero& genero, bool possui, bool consumiu, bool deseja, double preco, Pessoa& diretor, vector<Pessoa> atores) : Midia(codigo, nome, tamanho, genero, possui, consumiu, deseja, preco,'F'), diretor(diretor) {
 	this->diretor = diretor;
 	this->atores = atores;
 }

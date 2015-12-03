@@ -123,9 +123,9 @@ map<int,Pessoa> static readPessoa(char *file)
  * @param  l          [description]
  * @return            [description]
  */
-list<Pessoa> static createlAtores(string codAutores, map<int,Pessoa> l)
+vector<Pessoa> static createlAtores(string codAutores, map<int,Pessoa> l)
 {
-	list<Pessoa> autores;
+	vector<Pessoa> autores;
 	vector<string> partes;
 	StringSplit(codAutores,",",partes);
 	//cout << codAutores << "\n";
@@ -140,16 +140,46 @@ list<Pessoa> static createlAtores(string codAutores, map<int,Pessoa> l)
 }
 
 /**
+ * [relationPessoaMidia description]
+ * @param  p [description]
+ * @param  m [description]
+ * @return   [description]
+ */
+void static relationPessoaMidia(vector<Pessoa>& p, Midia& m)
+{
+	for(unsigned int i =0; i < p.size();i++)
+	{
+		p[i].addMidia(m);
+		cout << p[i].getNome() << endl;
+		// cout << p[i].getTrabalhos()[0].getNome()<< endl;
+	}
+
+	// return p;
+
+}
+
+
+// void static printVector(vector<Pessoa> p)
+// {
+// 	for(unsigned int i =0; i < p.size();i++)
+// 	{
+// 		cout << p[i].getTrabalhos().size() << endl;
+// 		// for(unsigned int j = 0; i < p[i].getTrabalhos().size();j++)
+// 			// cout << p[i].getTrabalhos()[j].getNome()<< endl;
+// 	}
+// }
+
+/**
  * [readMidia description]
  * @param  file     [description]
  * @param  lPessoas [description]
  * @param  lGenero  [description]
  * @return          [description]
  */
-map<int,Midia> static readMidia(char *file, map<int,Pessoa> lPessoas, map<string,Genero> lGenero)
+map<int,Midia> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<string,Genero> lGenero)
 {
 	map<int,Midia> m;
-	list<Pessoa> elenco; 
+	vector<Pessoa> elenco; 
 	ifstream inFile(file);
 	string line;
 	vector<string> partes;
@@ -195,14 +225,24 @@ map<int,Midia> static readMidia(char *file, map<int,Pessoa> lPessoas, map<string
 		{
 			case 'L':
 				m.insert(pair<int,Midia>(codigo,Livro(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco)));
+				relationPessoaMidia(elenco,m.find(codigo)->second);
+				// for(unsigned int i =0; i < elenco.size();i++)
+				     // elenco[i].addMidia(m.find(codigo)->second);
+					// cout << p[i].getTrabalhos()[0].getNome()<< endl;
+				 
+				
+				// cout << elenco[0].getTrabalhos()[0].getNome() << endl;
 				break;
 			case 'F':
 				m.insert(pair<int,Midia>(codigo,Filme(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,diretor,elenco)));
+				relationPessoaMidia(elenco,m.find(codigo)->second);
 				break;
 			case 'S': 
 				m.insert(pair<int,Midia>(codigo,Serie(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco,temporada,serie)));
+				relationPessoaMidia(elenco,m.find(codigo)->second);
 				break;
 		}
+		// printVector(elenco);
 		elenco.clear();		
 		partes.clear();
 
@@ -338,13 +378,13 @@ vector<Pessoa> static mapToVectorPessoa(map<int,Pessoa>p,vector<Pessoa>& l)
 	return l;
 }
 
-void static generatorPorPessoa(map<int,Pessoa> p, map<int,Midia> m){
+void static generatorPorPessoa(map<int,Pessoa> p){
 	
 	ofstream outFile("2-porpessoa.csv");
 	outFile<<"Pessoa;Produção"<<endl;
 	//vector<Midia> lMidias;
 	vector<Pessoa> lPessoas;
-
+	unsigned int j;
 
 	mapToVectorPessoa(p,lPessoas);
 	//mapToVectorMidia();
@@ -353,28 +393,17 @@ void static generatorPorPessoa(map<int,Pessoa> p, map<int,Midia> m){
 	// for (map<int, Pessoa>::iterator it = p.begin(); it != p.end(); ++it){
 	for(unsigned i = 0; i < lPessoas.size();i++)
 	{
-		outFile << lPessoas[i].getNome() << endl;//<<";";
 		
-		for (map<int, Midia>::iterator it2 = m.begin(); it2 != m.end(); ++it2)
+		cout << lPessoas[i].getTrabalhos().size() << endl; 
+		if(lPessoas[i].getTrabalhos().size() > 0)
 		{
-			// switch(it2->second.getType()){
-				
-			// 	case 'F':
-			// 		//TODO
-			// 		//if(((Filme)it2->second).getDiretor()==it->second.getNome())
-			// 			//outFile<<it2->second.getNome()<<",";
-			// 		break;
-			// 	case 'L':
-			// 		//TODO
-			// 		break;
-			// 	case 'S':
-			// 		//TODO
-			// 		break;
-				
-			// }
-		}
-		// outFile<<endl;
-		
+			outFile << lPessoas[i].getNome() <<";";//<<";";
+			for(j = 0; i < lPessoas[i].getTrabalhos().size()-1; j++)
+			{
+				outFile << (lPessoas[i].getTrabalhos())[j].getNome() << ",";
+			}
+			outFile << lPessoas[i].getTrabalhos()[j].getNome() << endl;
+		}		
 	}
 	
 }

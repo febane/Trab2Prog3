@@ -14,7 +14,7 @@
  * @param temporada temporada da serie
  * @param nameSerie nome da serie
  */
-Serie::Serie(int codigo, string nome, int tamanho, Genero& genero, bool possui, bool consumiu, bool deseja, double preco, list<Pessoa> atores, string temporada, string nameSerie) : Midia(codigo, nome, tamanho, genero, possui, consumiu, deseja, preco, 'S') {
+Serie::Serie(int codigo, string nome, int tamanho, Genero& genero, bool possui, bool consumiu, bool deseja, double preco, vector<Pessoa> atores, string temporada, string nameSerie) : Midia(codigo, nome, tamanho, genero, possui, consumiu, deseja, preco, 'S') {
 	this->atores = atores;
 	this->temporada = temporada;
 	this->nameSerie = nameSerie;
@@ -24,7 +24,7 @@ Serie::Serie(int codigo, string nome, int tamanho, Genero& genero, bool possui, 
  * Pega lista de atores da serie
  * @return lista de atores da serie
  */
-list<Pessoa> Serie::getAtores() {
+vector<Pessoa> Serie::getAtores() {
 	return atores;
 }
 

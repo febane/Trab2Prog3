@@ -52,7 +52,7 @@ void Pessoa::addMidia(Midia& midia)//:midia(midia)
  * Pega lista de midias feitas pela pessoa
  * @return conjunto de midias realizadas por pessoa
  */
-list<Midia> Pessoa::getTrabalhos() {
+vector<Midia> Pessoa::getTrabalhos() {
  	return trabalhos;
 }
 

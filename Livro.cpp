@@ -12,7 +12,7 @@
  * @param preco preco do livro
  * @param autores lista de autores do livro
  */
-Livro::Livro(int codigo, string nome, int tamanho, Genero& genero, bool possui, bool consumiu, bool deseja, double preco, list<Pessoa> autores) : Midia(codigo, nome, tamanho, genero, possui, consumiu, deseja, preco, 'L') {
+Livro::Livro(int codigo, string nome, int tamanho, Genero& genero, bool possui, bool consumiu, bool deseja, double preco, vector<Pessoa> autores) : Midia(codigo, nome, tamanho, genero, possui, consumiu, deseja, preco, 'L') {
 	this->autores = autores;
 }
 
@@ -20,6 +20,6 @@ Livro::Livro(int codigo, string nome, int tamanho, Genero& genero, bool possui, 
  * Pega autores do livro
  * @return lista de autores do livros
  */
-list<Pessoa> Livro::getAutores() {
+vector<Pessoa> Livro::getAutores() {
 	return autores;
 }

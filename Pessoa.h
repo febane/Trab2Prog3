@@ -1,6 +1,5 @@
-#include <set>
 #include <string>
-#include <list>
+#include <vector>
 #include "Midia.h"
 
 #ifndef Pessoa_H
@@ -14,7 +13,7 @@ class Pessoa {
 private:
 	int codigo;
 	string nome;
-	list<Midia> trabalhos;
+	vector<Midia> trabalhos;
 	
 public:
 	Pessoa(int codigo, string nome);
@@ -23,7 +22,7 @@ public:
 	string getNome();
 	//void addMidia(Midia m);
 	// int qtdTrabalhos();
-	list<Midia> getTrabalhos();
+	vector<Midia> getTrabalhos();
 	//int compareTo(Pessoa o);
 	void addMidia(Midia& midia);
 	
