@@ -1,7 +1,7 @@
 #include <vector>
 #include "Pessoa.h"
 #include "Midia.h"
-
+#include <iostream>
 using namespace std;
 
 class Serie : public Midia {

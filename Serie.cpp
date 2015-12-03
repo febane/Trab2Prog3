@@ -17,6 +17,7 @@
 Serie::Serie(int codigo, string nome, int tamanho, Genero& genero, bool possui, bool consumiu, bool deseja, double preco, vector<Pessoa> atores, string temporada, string nameSerie) : Midia(codigo, nome, tamanho, genero, possui, consumiu, deseja, preco, 'S') {
 	this->atores = atores;
 	this->temporada = temporada;
+	//cout << this->temporada << endl;
 	this->nameSerie = nameSerie;
 }
 

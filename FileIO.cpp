@@ -240,7 +240,13 @@ map<int,Midia> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<strin
 				break;
 			case 'S': 
 				m.insert(pair<int,Midia>(codigo,Serie(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco,temporada,serie)));
-				relationPessoaMidia(elenco,m.find(codigo)->second,lPessoas);
+				relationPessoaMidia(elenco,m.find(codigo)->second,lPessoas);				
+				// Midia *x = new Serie(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco,temporada,serie);
+				// Serie *ss = (Serie*)x;
+				// Serie *ss = static_cast<Serie*>(&x);
+				//Serie *ss = (Serie*) &(m.find(codigo)->second,lPessoas);
+				// cout << ss->getNomeSerie() << endl;
+
 				break;
 		}
 		// printVector(elenco);
@@ -403,16 +409,37 @@ void static generatorPorPessoa(map<int,Pessoa> p){
 	
 }
 
-void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia> m){
+void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia> &m){
 	
 	ofstream outFile("1-estatisticas.txt");
+	vector<Midia> lMidias;
+	vector<Serie> lSeries;
+	Serie *s;
+	int horasConsumidas = 0,horasConsumir = 0;
+	//mapToVectorMidia(m,lMidias);
+	for (map<int,Midia>::iterator it=m.begin(); it!=m.end(); ++it)
+	{
+
+		if(it->second.getType() != 'L')
+		{
+			if(it->second.isConsumiu())
+				horasConsumidas += it->second.getTamanho(); 
+			if(it->second.isDeseja())
+				horasConsumir += it->second.getTamanho();
+			if(it->second.getType() == 'S')
+			{	//lSeries.push_back(<Serie>(it->second));}
+			 // s = (Serie*)&it->second;
+			 	// cout << ((Serie&)it->second).getTemporada() << endl;
+			}
+		}
+	}	
 	
-	outFile<<"Horas consumidas: ";
+	outFile<<"Horas consumidas: " << horasConsumidas << " minutos" << endl;
 	
-	outFile<<"Horas a consumir: ";
+	outFile<<"Horas a consumir: " << horasConsumir << " minutos" << endl;
 	
-	outFile<<"Mídias por gênero: "<<endl;
+	outFile<<"\nMídias por gênero: "<<endl;
 	
-	outFile<<"Temporadas por śerie: "<<endl;
+	outFile<<"\nTemporadas por śerie: "<<endl;
 	
 }

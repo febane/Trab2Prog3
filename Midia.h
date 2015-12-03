@@ -38,6 +38,8 @@ public:
 	void setPreco(double preco);
 	string toString();
 	int compareTo(Midia otherMidia);
+	virtual ~Midia(){}
+	virtual string getTemporada(){}
 
 };
 
