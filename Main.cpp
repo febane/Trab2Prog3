@@ -30,9 +30,9 @@ int main(int argc, char *argv[]){
 	
 	map<int,Pessoa> p;
 	map<string,Genero> g;
-	map<int,Midia> m;
+	map<int,Midia*> m;
 	map<int,Emprestimo> e;
-	bool ro;
+	bool ro = 0;
 	int idx;
 		
 	idx = isIn(argv, (char*)"-g",argc);
@@ -62,5 +62,5 @@ int main(int argc, char *argv[]){
 			generatorEmprestimos(e);
 		
 	}
-		
+		freeMidia(m);
 }

@@ -177,9 +177,9 @@ void static relationPessoaMidia(vector<Pessoa>& p, Midia& m,map<int,Pessoa>& lPe
  * @param  lGenero  [description]
  * @return          [description]
  */
-map<int,Midia> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<string,Genero> lGenero)
+map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<string,Genero> lGenero)
 {
-	map<int,Midia> m;
+	map<int,Midia*> m;
 	vector<Pessoa> elenco; 
 	ifstream inFile(file);
 	string line;
@@ -225,8 +225,8 @@ map<int,Midia> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<strin
 		switch(type)
 		{
 			case 'L':
-				m.insert(pair<int,Midia>(codigo,Livro(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco)));
-				relationPessoaMidia(elenco,m.find(codigo)->second,lPessoas);
+				m.insert(pair<int,Midia*>(codigo,new Livro(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco)));
+				relationPessoaMidia(elenco,*(m.find(codigo)->second),lPessoas);
 				// for(unsigned int i =0; i < elenco.size();i++)
 				     // elenco[i].addMidia(m.find(codigo)->second);
 					// cout << p[i].getTrabalhos()[0].getNome()<< endl;
@@ -235,12 +235,12 @@ map<int,Midia> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<strin
 				// cout << elenco[0].getTrabalhos()[0].getNome() << endl;
 				break;
 			case 'F':
-				m.insert(pair<int,Midia>(codigo,Filme(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,diretor,elenco)));
-				relationPessoaMidia(elenco,m.find(codigo)->second,lPessoas);
+				m.insert(pair<int,Midia*>(codigo,new Filme(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,diretor,elenco)));
+				relationPessoaMidia(elenco,*(m.find(codigo)->second),lPessoas);
 				break;
 			case 'S': 
-				m.insert(pair<int,Midia>(codigo,Serie(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco,temporada,serie)));
-				relationPessoaMidia(elenco,m.find(codigo)->second,lPessoas);				
+				m.insert(pair<int,Midia*>(codigo,new Serie(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco,temporada,serie)));
+				relationPessoaMidia(elenco,*(m.find(codigo)->second),lPessoas);				
 				// Midia *x = new Serie(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco,temporada,serie);
 				// Serie *ss = (Serie*)x;
 				// Serie *ss = static_cast<Serie*>(&x);
@@ -268,15 +268,15 @@ map<int,Midia> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<strin
  */
 map<int,Emprestimo> static readEmprestimo(char *file)
 {
-	time_t t;
-	time_t f;
+	time_t t = 0;
+	time_t f = 0;
 	map<int,Emprestimo> e;
 	ifstream inFile(file);
 	string line;
 	vector<string> partes;
 	vector<string>data;
 	struct tm dateEmp, dateDev;
-
+	string nome;
 	getline(inFile,line);
 	time(&t);
 	while(!inFile.eof())
@@ -284,7 +284,7 @@ map<int,Emprestimo> static readEmprestimo(char *file)
 		getline(inFile,line);
 		StringSplit(line,";",partes);
 		int codigo = atoi(partes[0].c_str());
-		string nome = partes[1];
+		nome = partes[1];
 		StringSplit(partes[2],"/",data);
 		
 		dateEmp = *localtime(&t);
@@ -311,16 +311,23 @@ map<int,Emprestimo> static readEmprestimo(char *file)
 	return e;
 }
 
-vector<Midia> static mapToVectorMidia(map<int,Midia>m,vector<Midia>& l)
+vector<Midia> static mapToVectorMidia(map<int,Midia*>m,vector<Midia>& l)
 {
-	for (map<int,Midia>::iterator it=m.begin(); it!=m.end(); ++it)
-		l.push_back(it->second);
+	for (map<int,Midia*>::iterator it=m.begin(); it!=m.end(); ++it)
+		l.push_back(*(it->second));
 	
 	return l;
 }
 
+/** [freeMidia Liberando MAP de midias alocado] */
+void static freeMidia(map<int,Midia*>m)
+{
+	for (map<int,Midia*>::iterator it=m.begin(); it!=m.end(); ++it)
+		delete (it->second);	
+}
 
-void static generatorWishList(map<int,Midia> m)
+
+void static generatorWishList(map<int,Midia*> m)
 {
 	ofstream outFile("4-wishlist.csv");
 	vector<Midia> lMidias;
@@ -354,7 +361,7 @@ void static generatorEmprestimos(map<int,Emprestimo> e){
 	
 	ofstream outFile("3-emprestimos.csv");
 	outFile<<"Data;Tomador;Atrasado?;Dias de Atraso"<<endl;
-	time_t tempo;
+	time_t tempo = 0;
 	struct tm hj, a;
 	int dif;
 	
@@ -409,7 +416,7 @@ void static generatorPorPessoa(map<int,Pessoa> p){
 	
 }
 
-void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia> &m){
+void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia*> &m){
 	
 	ofstream outFile("1-estatisticas.txt");
 	vector<Midia> lMidias;
@@ -417,19 +424,18 @@ void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia> &m){
 	Serie *s;
 	int horasConsumidas = 0,horasConsumir = 0;
 	//mapToVectorMidia(m,lMidias);
-	for (map<int,Midia>::iterator it=m.begin(); it!=m.end(); ++it)
+	for (map<int,Midia*>::iterator it=m.begin(); it!=m.end(); ++it)
 	{
 
-		if(it->second.getType() != 'L')
+		if(it->second->getType() != 'L')
 		{
-			if(it->second.isConsumiu())
-				horasConsumidas += it->second.getTamanho(); 
-			if(it->second.isDeseja())
-				horasConsumir += it->second.getTamanho();
-			if(it->second.getType() == 'S')
+			if(it->second->isConsumiu())
+				horasConsumidas += it->second->getTamanho(); 
+			if(it->second->isDeseja())
+				horasConsumir += it->second->getTamanho();
+			if(it->second->getType() == 'S')
 			{	//lSeries.push_back(<Serie>(it->second));}
-			 // s = (Serie*)&it->second;
-			 	// cout << ((Serie&)it->second).getTemporada() << endl;
+			  cout << ((Serie*)it->second)->getNomeSerie() << endl;
 			}
 		}
 	}	
