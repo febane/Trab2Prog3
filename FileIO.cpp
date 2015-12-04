@@ -148,27 +148,11 @@ vector<Pessoa> static createlAtores(string codAutores, map<int,Pessoa>& l)
 void static relationPessoaMidia(vector<Pessoa>& p, Midia& m,map<int,Pessoa>& lPessoas)
 {
 	for(unsigned int i =0; i < p.size();i++)
-	{
-		lPessoas.find(p[i].getCodigo())->second.addMidia(m);
-		//p[i].addMidia(m);
-		//cout << p[i].getNome() << endl;
-		// cout << p[i].getTrabalhos()[0].getNome()<< endl;
-	}
-
-	// return p;
-
+		lPessoas.find(p[i].getCodigo())->second.addMidia(m);	
 }
 
 
-// void static printVector(vector<Pessoa> p)
-// {
-// 	for(unsigned int i =0; i < p.size();i++)
-// 	{
-// 		cout << p[i].getTrabalhos().size() << endl;
-// 		// for(unsigned int j = 0; i < p[i].getTrabalhos().size();j++)
-// 			// cout << p[i].getTrabalhos()[j].getNome()<< endl;
-// 	}
-// }
+
 
 /**
  * [readMidia description]
@@ -177,7 +161,7 @@ void static relationPessoaMidia(vector<Pessoa>& p, Midia& m,map<int,Pessoa>& lPe
  * @param  lGenero  [description]
  * @return          [description]
  */
-map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<string,Genero> lGenero)
+map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<string,Genero> &lGenero)
 {
 	map<int,Midia*> m;
 	vector<Pessoa> elenco; 
@@ -227,6 +211,7 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 			case 'L':
 				m.insert(pair<int,Midia*>(codigo,new Livro(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco)));
 				relationPessoaMidia(elenco,*(m.find(codigo)->second),lPessoas);
+				lGenero.find(gen)->second.addMidiaGen(*(m.find(codigo)->second));
 				// for(unsigned int i =0; i < elenco.size();i++)
 				     // elenco[i].addMidia(m.find(codigo)->second);
 					// cout << p[i].getTrabalhos()[0].getNome()<< endl;
@@ -237,10 +222,12 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 			case 'F':
 				m.insert(pair<int,Midia*>(codigo,new Filme(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,diretor,elenco)));
 				relationPessoaMidia(elenco,*(m.find(codigo)->second),lPessoas);
+				lGenero.find(gen)->second.addMidiaGen(*(m.find(codigo)->second));
 				break;
 			case 'S': 
 				m.insert(pair<int,Midia*>(codigo,new Serie(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco,temporada,serie)));
-				relationPessoaMidia(elenco,*(m.find(codigo)->second),lPessoas);				
+				relationPessoaMidia(elenco,*(m.find(codigo)->second),lPessoas);
+				lGenero.find(gen)->second.addMidiaGen(*(m.find(codigo)->second));				
 				// Midia *x = new Serie(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco,temporada,serie);
 				// Serie *ss = (Serie*)x;
 				// Serie *ss = static_cast<Serie*>(&x);
@@ -416,36 +403,43 @@ void static generatorPorPessoa(map<int,Pessoa> p){
 	
 }
 
-void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia*> &m){
+vector<Genero> static mapToVectorGenero(map<string,Genero>g,vector<Genero>& l)
+{
+	for (map<string,Genero>::iterator it=g.begin(); it!=g.end(); ++it)
+		l.push_back(it->second);
+	
+	return l;
+}
+
+void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia*> &m, map<string,Genero> g){
 	
 	ofstream outFile("1-estatisticas.txt");
 	vector<Midia> lMidias;
 	vector<Serie> lSeries;
-	Serie *s;
+	vector<Genero> lGenero;
 	int horasConsumidas = 0,horasConsumir = 0;
+	mapToVectorGenero(g,lGenero);
 	//mapToVectorMidia(m,lMidias);
 	for (map<int,Midia*>::iterator it=m.begin(); it!=m.end(); ++it)
 	{
-
 		if(it->second->getType() != 'L')
 		{
 			if(it->second->isConsumiu())
 				horasConsumidas += it->second->getTamanho(); 
 			if(it->second->isDeseja())
 				horasConsumir += it->second->getTamanho();
-			if(it->second->getType() == 'S')
-			{	//lSeries.push_back(<Serie>(it->second));}
-			  cout << ((Serie*)it->second)->getNomeSerie() << endl;
-			}
+			if(it->second->getType() == 'S')	
+			  cout << ((Serie*)it->second)->getNomeSerie() << endl;			
 		}
 	}	
 	
-	outFile<<"Horas consumidas: " << horasConsumidas << " minutos" << endl;
-	
-	outFile<<"Horas a consumir: " << horasConsumir << " minutos" << endl;
-	
+	outFile<<"Horas consumidas: " << horasConsumidas << " minutos" << endl;	
+	outFile<<"Horas a consumir: " << horasConsumir << " minutos" << endl;	
 	outFile<<"\nMídias por gênero: "<<endl;
-	
-	outFile<<"\nTemporadas por śerie: "<<endl;
+
+	for(unsigned int k = 0; k < lGenero.size();k++)
+		outFile << "\t" << lGenero[k].getNome() << ": " << lGenero[k].getMidiaGen().size() << endl;
+			
+	outFile<<"\nTemporadas por série: "<<endl;
 	
 }

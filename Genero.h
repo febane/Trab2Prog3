@@ -1,20 +1,23 @@
 #include <string>
+#include <vector>
 #ifndef Genero_H
 #define Genero_H
 using namespace std;
 
+class Midia;
 class Genero{
 
 private:
 	string sigla;
 	string nome;
-	//set<Midia> midiasGenero;
+	vector<Midia*> midiasGenero;
 
 public:
 	Genero(string sigla, string nome);
 	string getSigla();
 	string getNome();
-	//void addMidiaGen(Midia m);
+	void addMidiaGen(Midia& m);
+	vector<Midia*> getMidiaGen();
 	int qtdGenero();
 	//int compareTo(Genero o);
 

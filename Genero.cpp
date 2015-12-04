@@ -32,19 +32,25 @@ string Genero::getNome() {
  * Adiciona midia com genero correspondente
  * @param m midia a ser adicionada
  */
-//void Genero::addMidiaGen(Midia m)
-//{
-//	midiasGenero.insert(m);
-//}
+void Genero::addMidiaGen(Midia& m)
+{
+	midiasGenero.push_back(&m);
+}
 
 // /**
 //  * Retorna quantidade de generos
 //  * @return quantidade de generos
 //  */
-// int Genero::qtdGenero()
-// {
-// 	return midiasGenero.size();
-// }
+int Genero::qtdGenero()
+{
+	return midiasGenero.size();
+}
+
+
+vector<Midia*> Genero::getMidiaGen()
+{
+	return midiasGenero;
+}
 //
 //
 // int Genero::compareTo(Genero o) {

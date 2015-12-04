@@ -49,8 +49,7 @@ int main(int argc, char *argv[]){
 		m = readMidia(argv[idx+1],p,g);		
 		generatorWishList(m);
 		generatorPorPessoa(p);
-		generatorEstatisticas(p,m);
-		
+		generatorEstatisticas(p,m,g);		
 	}
 	
 	idx = isIn(argv, (char*)"-e",argc);
