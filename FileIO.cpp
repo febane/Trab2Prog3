@@ -394,7 +394,7 @@ bool static compareToEmprestimo(Emprestimo& s1,Emprestimo& s2)
    //return (col.compare(pb1, pb1 + s1.getEmprestimo().size(),pb2, pb2 + s2.getEmprestimo().size()) < 0);
 }
 
-
+//oi
 void static generatorEmprestimos(map<int,Emprestimo> e){
 	
 	ofstream outFile("3-emprestimos.csv");
