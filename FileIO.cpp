@@ -445,7 +445,7 @@ void static generatorPorPessoa(map<int,Pessoa> p){
 			// sort(lPessoas[i].getTrabalhos().begin(),lPessoas[i].getTrabalhos().end(),compareToTrab);
 			for(j = 0; j < lPessoas[i].getTrabalhos().size()-1; j++)
 			{
-				outFile << (lPessoas[i].getTrabalhos())[j].getNome() << ",";
+				outFile << (lPessoas[i].getTrabalhos())[j].getNome() << ", ";
 			}
 			outFile << lPessoas[i].getTrabalhos()[j].getNome() << endl;
 		}		
