@@ -450,6 +450,8 @@ bool static compareToTrab( Midia& s1, Midia& s2)
    const collate<char>& col = use_facet<collate<char> >(locale()); // Use the global locale
    const char* pb1 = s1.getNome().data(); 
    const char* pb2 = s2.getNome().data();
+   cout<<s1.getNome()<<endl;
+   cout<<s2.getNome()<<endl;
    
    return (col.compare(pb1, pb1 + s1.getNome().size(),pb2, pb2 + s2.getNome().size()) < 0);
 }
@@ -469,7 +471,14 @@ void static generatorPorPessoa(map<int,Pessoa> p){
 		if(lPessoas[i].getTrabalhos().size() > 0)
 		{
 			outFile << lPessoas[i].getNome() <<";";
+<<<<<<< Updated upstream
 			sort((lPessoas[i].getTrabalhos()).begin(),(lPessoas[i].getTrabalhos()).end(),compareToTrab);
+=======
+			cout<<lPessoas[i].getNome()<<endl;
+			if(lPessoas[i].getTrabalhos().size()>1)
+				sort(lPessoas[i].getTrabalhos().begin(),lPessoas[i].getTrabalhos().end(),compareToTrab);
+			cout<<"ok"<<endl;
+>>>>>>> Stashed changes
 			for(j = 0; j < lPessoas[i].getTrabalhos().size()-1; j++)
 			{
 				outFile << (lPessoas[i].getTrabalhos())[j].getNome() << ", ";
