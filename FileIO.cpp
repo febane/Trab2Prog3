@@ -394,7 +394,7 @@ bool static compareToEmprestimo(Emprestimo& s1,Emprestimo& s2)
    //return (col.compare(pb1, pb1 + s1.getEmprestimo().size(),pb2, pb2 + s2.getEmprestimo().size()) < 0);
 }
 
-//oi
+
 void static generatorEmprestimos(map<int,Emprestimo> e){
 	
 	ofstream outFile("3-emprestimos.csv");
@@ -450,8 +450,8 @@ bool static compareToTrab( Midia& s1, Midia& s2)
    const collate<char>& col = use_facet<collate<char> >(locale()); // Use the global locale
    const char* pb1 = s1.getNome().data(); 
    const char* pb2 = s2.getNome().data();
-   cout<<s1.getNome()<<endl;
-   cout<<s2.getNome()<<endl;
+   //cout<<s1.getNome()<<endl;
+   //cout<<s2.getNome()<<endl;
    
    return (col.compare(pb1, pb1 + s1.getNome().size(),pb2, pb2 + s2.getNome().size()) < 0);
 }
@@ -471,25 +471,11 @@ void static generatorPorPessoa(map<int,Pessoa> p){
 		if(lPessoas[i].getTrabalhos().size() > 0)
 		{
 			outFile << lPessoas[i].getNome() <<";";
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-<<<<<<< Updated upstream
 			sort((lPessoas[i].getTrabalhos()).begin(),(lPessoas[i].getTrabalhos()).end(),compareToTrab);
-=======
-=======
->>>>>>> Stashed changes
-			cout<<lPessoas[i].getNome()<<endl;
+			//cout<<lPessoas[i].getNome()<<endl;
 			if(lPessoas[i].getTrabalhos().size()>1)
 				sort(lPessoas[i].getTrabalhos().begin(),lPessoas[i].getTrabalhos().end(),compareToTrab);
-			cout<<"ok"<<endl;
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
-			// sort((lPessoas[i].getTrabalhos()).begin(),(lPessoas[i].getTrabalhos()).end(),compareToTrab);
-			// vector<Midia> *trabalhos = &lPessoas[i].getTrabalhos();
->>>>>>> d7dccb858499e3da1b7c20a9465abbb0d68c373b
-=======
->>>>>>> Stashed changes
+			//cout<<"ok"<<endl;
 			for(j = 0; j < lPessoas[i].getTrabalhos().size()-1; j++)
 			{
 				outFile << (lPessoas[i].getTrabalhos())[j].getNome() << ", ";
@@ -560,7 +546,7 @@ void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia*> &m, map<str
 			{	
 			  lSeries.push_back((Serie*)it->second);
 			  nomeSeries.insert(((Serie*)it->second)->getNomeSerie());  	
-			  cout << ((Serie*)it->second)->getNomeSerie() << endl;			
+			  //cout << ((Serie*)it->second)->getNomeSerie() << endl;			
 			}
 		}
 	}	
