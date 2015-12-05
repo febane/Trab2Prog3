@@ -442,7 +442,8 @@ void static generatorPorPessoa(map<int,Pessoa> p){
 		if(lPessoas[i].getTrabalhos().size() > 0)
 		{
 			outFile << lPessoas[i].getNome() <<";";
-			sort((lPessoas[i].getTrabalhos()).begin(),(lPessoas[i].getTrabalhos()).end(),compareToTrab);
+			// sort((lPessoas[i].getTrabalhos()).begin(),(lPessoas[i].getTrabalhos()).end(),compareToTrab);
+			// vector<Midia> *trabalhos = &lPessoas[i].getTrabalhos();
 			for(j = 0; j < lPessoas[i].getTrabalhos().size()-1; j++)
 			{
 				outFile << (lPessoas[i].getTrabalhos())[j].getNome() << ", ";
@@ -461,8 +462,39 @@ vector<Genero> static mapToVectorGenero(map<string,Genero>g,vector<Genero>& l)
 	return l;
 }
 
+
+bool static compareToGenero( Genero& s1, Genero& s2)
+{
+   locale::global(locale("pt_BR.UTF-8"));
+   const collate<char>& col = use_facet<collate<char> >(locale()); // Use the global locale
+   const char* pb1; 
+   const char* pb2;
+
+   if(s1.qtdGenero() != s2.qtdGenero())
+   		return ( s1.qtdGenero() > s2.qtdGenero());
+   else
+   {
+   		pb1 = s1.getNome().data();
+   		pb2 = s2.getNome().data();
+		return (col.compare(pb1, pb1 + s1.getNome().size(),pb2, pb2 + s2.getNome().size()) < 0);
+   	}
+
+}
+
+bool static compareToSerie( Serie& s1, Serie& s2)
+{
+   locale::global(locale("pt_BR.UTF-8"));
+   const collate<char>& col = use_facet<collate<char> >(locale()); // Use the global locale
+   const char* pb1 = s1.getNome().data(); 
+   const char* pb2 = s2.getNome().data();
+   
+   return (col.compare(pb1, pb1 + s1.getNome().size(),pb2, pb2 + s2.getNome().size()) < 0);
+}
+
+
 void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia*> &m, map<string,Genero> g){
 	
+	locale::global(locale("C"));
 	ofstream outFile("1-estatisticas.txt");
 	vector<Midia> lMidias;
 	vector<Serie*> lSeries;
@@ -491,6 +523,7 @@ void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia*> &m, map<str
 	outFile<<"Horas a consumir: " << horasConsumir << " minutos" << endl;	
 	outFile<<"\nMídias por gênero: "<<endl;
 
+	sort(lGenero.begin(),lGenero.end(),compareToGenero);
 	for(unsigned int k = 0; k < lGenero.size();k++)
 		outFile << "\t" << lGenero[k].getNome() << ": " << lGenero[k].getMidiaGen().size() << endl;
 			
@@ -500,7 +533,7 @@ void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia*> &m, map<str
 		int assistida = 0, assistir = 0;	
 		for(unsigned int k = 0; k < lSeries.size(); k++)
 		{
-			if((*it).compare(lSeries[k]->getNomeSerie()))
+			if(!(*it).compare(lSeries[k]->getNomeSerie()))
 			{
 				if(lSeries[k]->isDeseja())
 					assistir++;
