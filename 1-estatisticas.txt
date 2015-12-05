@@ -21,3 +21,5 @@ Mídias por gênero:
 	Terror (ou horror): 2
 
 Temporadas por série: 
+	Fringe: 0 assistidas, 1 assistir
+	Twin Peaks: 1 assistidas, 1 assistir

@@ -44,8 +44,7 @@ int main(int argc, char *argv[]){
 		p = readPessoa(argv[idx+1]);
 	
 	idx = isIn(argv, (char*)"-m",argc);
-	if(idx!=-1){
-		
+	if(idx!=-1){	
 		m = readMidia(argv[idx+1],p,g);		
 		generatorWishList(m);
 		generatorPorPessoa(p);

@@ -4,7 +4,6 @@
 #include <list>
 #include <map>
 #include <fstream>
-#include <cstring>
 #include "Filme.h"
 #include "Livro.h"
 #include "Serie.h"
@@ -13,6 +12,7 @@
 #include <cstring>
 #include <algorithm>
 #include <ctime>
+#include <string>
 
 using namespace std;
 
@@ -415,11 +415,11 @@ void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia*> &m, map<str
 	
 	ofstream outFile("1-estatisticas.txt");
 	vector<Midia> lMidias;
-	vector<Serie> lSeries;
+	vector<Serie*> lSeries;
+	set<string> nomeSeries;
 	vector<Genero> lGenero;
 	int horasConsumidas = 0,horasConsumir = 0;
 	mapToVectorGenero(g,lGenero);
-	//mapToVectorMidia(m,lMidias);
 	for (map<int,Midia*>::iterator it=m.begin(); it!=m.end(); ++it)
 	{
 		if(it->second->getType() != 'L')
@@ -428,8 +428,12 @@ void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia*> &m, map<str
 				horasConsumidas += it->second->getTamanho(); 
 			if(it->second->isDeseja())
 				horasConsumir += it->second->getTamanho();
-			if(it->second->getType() == 'S')	
+			if(it->second->getType() == 'S')
+			{	
+			  lSeries.push_back((Serie*)it->second);
+			  nomeSeries.insert(((Serie*)it->second)->getNomeSerie());  	
 			  cout << ((Serie*)it->second)->getNomeSerie() << endl;			
+			}
 		}
 	}	
 	
@@ -441,5 +445,20 @@ void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia*> &m, map<str
 		outFile << "\t" << lGenero[k].getNome() << ": " << lGenero[k].getMidiaGen().size() << endl;
 			
 	outFile<<"\nTemporadas por série: "<<endl;
+	for(set<string>::iterator it=nomeSeries.begin(); it!=nomeSeries.end(); ++it)
+	{  
+		int assistida = 0, assistir = 0;	
+		for(unsigned int k = 0; k < lSeries.size(); k++)
+		{
+			if((*it).compare(lSeries[k]->getNomeSerie()))
+			{
+				if(lSeries[k]->isDeseja())
+					assistir++;
+				if(lSeries[k]->isConsumiu())
+					assistida++;
+			}	
+		}
+		outFile << "\t" << *it <<": "<< assistida << " assistidas, " << assistir << " a assistir" <<endl;
+	}
 	
 }
