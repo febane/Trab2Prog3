@@ -111,8 +111,7 @@ map<int,Pessoa> static readPessoa(char *file)
 			p.insert(pair<int,Pessoa>(atoi(partes[0].c_str()),Pessoa(atoi(partes[0].c_str()),partes[1])));	
 		partes.clear();
 	}	
-
-		//cout << count << endl;		
+		
 	inFile.close();
 	return p;
 }
@@ -223,6 +222,7 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 				m.insert(pair<int,Midia*>(codigo,new Filme(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,diretor,elenco)));
 				relationPessoaMidia(elenco,*(m.find(codigo)->second),lPessoas);
 				lGenero.find(gen)->second.addMidiaGen(*(m.find(codigo)->second));
+				// lPessoas.find(partes[3])->second.addMidia(*(m.find(codigo)->second));
 				break;
 			case 'S': 
 				m.insert(pair<int,Midia*>(codigo,new Serie(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco,temporada,serie)));
@@ -240,7 +240,7 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 		elenco.clear();		
 		partes.clear();
 
-	}
+	}	
 	inFile.close();
 
 	return m;
@@ -404,6 +404,27 @@ vector<Pessoa> static mapToVectorPessoa(map<int,Pessoa>p,vector<Pessoa>& l)
 	return l;
 }
 
+
+bool static compareToPessoa(Pessoa& s1,Pessoa& s2)
+{
+   locale::global(locale("pt_BR.UTF-8"));
+   const collate<char>& col = use_facet<collate<char> >(locale()); // Use the global locale
+   const char* pb1 = s1.getNome().data(); 
+   const char* pb2 = s2.getNome().data();
+   
+   return (col.compare(pb1, pb1 + s1.getNome().size(),pb2, pb2 + s2.getNome().size()) < 0);
+}
+
+bool static compareToTrab( Midia& s1, Midia& s2)
+{
+   locale::global(locale("pt_BR.UTF-8"));
+   const collate<char>& col = use_facet<collate<char> >(locale()); // Use the global locale
+   const char* pb1 = s1.getNome().data(); 
+   const char* pb2 = s2.getNome().data();
+   
+   return (col.compare(pb1, pb1 + s1.getNome().size(),pb2, pb2 + s2.getNome().size()) < 0);
+}
+
 void static generatorPorPessoa(map<int,Pessoa> p){
 	
 	ofstream outFile("2-porpessoa.csv");
@@ -412,12 +433,14 @@ void static generatorPorPessoa(map<int,Pessoa> p){
 	unsigned int j;
 
 	mapToVectorPessoa(p,lPessoas);
+	sort(lPessoas.begin(),lPessoas.end(),compareToPessoa);
 	
 	for(unsigned i = 0; i < lPessoas.size();i++)
 	{
 		if(lPessoas[i].getTrabalhos().size() > 0)
 		{
 			outFile << lPessoas[i].getNome() <<";";
+			// sort(lPessoas[i].getTrabalhos().begin(),lPessoas[i].getTrabalhos().end(),compareToTrab);
 			for(j = 0; j < lPessoas[i].getTrabalhos().size()-1; j++)
 			{
 				outFile << (lPessoas[i].getTrabalhos())[j].getNome() << ",";
