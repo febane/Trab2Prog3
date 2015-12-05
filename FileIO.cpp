@@ -371,10 +371,36 @@ void static generatorWishList(map<int,Midia*> m)
 }
 
 
+vector<Emprestimo> static mapToVectorEmprestimo(map<int,Emprestimo>p,vector<Emprestimo>& l)
+{
+	for (map<int,Emprestimo>::iterator it=p.begin(); it!=p.end(); ++it)
+		l.push_back(it->second);
+	
+	return l;
+}
+
+bool static compareToEmprestimo(Emprestimo& s1,Emprestimo& s2)
+{
+   const struct tm pb1 = s1.getEmprestimo(); 
+   const struct tm pb2 = s2.getEmprestimo();
+   
+   if(pb1.tm_year != pb2.tm_year)
+	return pb1.tm_year > pb2.tm_year;
+   else if(pb1.tm_mon != pb2.tm_mon)
+    return pb1.tm_mon > pb2.tm_mon;
+   else
+    return pb1.tm_mday > pb2.tm_mday;
+   
+   //return (col.compare(pb1, pb1 + s1.getEmprestimo().size(),pb2, pb2 + s2.getEmprestimo().size()) < 0);
+}
+
+
 void static generatorEmprestimos(map<int,Emprestimo> e){
 	
 	ofstream outFile("3-emprestimos.csv");
 	outFile<<"Data;Tomador;Atrasado?;Dias de Atraso"<<endl;
+	vector<Emprestimo> emps;
+	mapToVectorEmprestimo(e, emps);
 	time_t tempo = 0;
 	struct tm hj, a;
 	int dif;
@@ -382,11 +408,12 @@ void static generatorEmprestimos(map<int,Emprestimo> e){
 	hj = *localtime(&tempo);
 	hj.tm_hour = 0; hj.tm_min = 0; hj.tm_sec = 0; hj.tm_mday = 6; hj.tm_mon = 11; hj.tm_year = 2015;
 	
-	for (map<int, Emprestimo>::iterator it = e.begin(); it != e.end(); ++it){
+	sort(emps.begin(),emps.end(),compareToEmprestimo);
+	for (unsigned int i=0; i<emps.size(); i++){
 		
-		outFile<<setfill('0')<<setw(2)<<it->second.getEmprestimo().tm_mday<<"/"<<setfill('0')<<setw(2)<<it->second.getEmprestimo().tm_mon<<"/"<<it->second.getEmprestimo().tm_year<<";"<<it->second.getTomador()<<";";
+		outFile<<setfill('0')<<setw(2)<<emps[i].getEmprestimo().tm_mday<<"/"<<setfill('0')<<setw(2)<<emps[i].getEmprestimo().tm_mon<<"/"<<emps[i].getEmprestimo().tm_year/1000<<setw(3)<<emps[i].getEmprestimo().tm_year%1000<<";"<<emps[i].getTomador()<<";";
 		
-		a = it->second.getDevolucao();
+		a = emps[i].getDevolucao();
 		dif = difftime(mktime(&hj),mktime(&a));
 		
 		if(dif>0)

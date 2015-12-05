@@ -18,6 +18,6 @@ public:
 	string getTomador();
 	struct tm getEmprestimo();
 	struct tm getDevolucao();
-	int compareTo(Emprestimo arg0);
+	//int compareTo(Emprestimo arg0);
 	
 };
