@@ -34,7 +34,7 @@ int main(int argc, char *argv[]){
 	map<int,Emprestimo> e;
 	bool ro = 0;
 	int idx;
-		
+	
 	idx = isIn(argv, (char*)"-g",argc);
 	if(idx!=-1)
 		g = readGenero(argv[idx+1]);
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]){
 	idx = isIn(argv, (char*)"-e",argc);
 	if(idx!=-1){
 		
-		e = readEmprestimo(argv[idx+1]);
+		e = readEmprestimo(argv[idx+1],m);
 		
 		if(!ro)
 			generatorEmprestimos(e);

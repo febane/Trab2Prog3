@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <ctime>
 #include <string>
+#include <stdexcept>
 
 using namespace std;
 
@@ -52,7 +53,9 @@ map<string,Genero> static readGenero(char *file)
 {
 	// char *ptr;
 	map<string,Genero> g;
-	ifstream inFile(file);
+	ifstream inFile;//(file);
+	try{
+	inFile.open(file);
 	string line;
 	vector<string> partes;
 
@@ -76,6 +79,10 @@ map<string,Genero> static readGenero(char *file)
 	}
 
 	inFile.close();
+	}
+	catch(std::ifstream::failure e){
+		cout<<"Erro de I/O"<<endl;
+	}
 	return g;
  
 }
@@ -89,7 +96,9 @@ map<string,Genero> static readGenero(char *file)
 map<int,Pessoa> static readPessoa(char *file)
 {
 	map<int,Pessoa> p;
-	ifstream inFile(file);
+	ifstream inFile;//(file);
+	try{
+	inFile.open(file);
 	string line;
 	vector<string> partes;
 	// unsigned int count = 0;
@@ -113,6 +122,10 @@ map<int,Pessoa> static readPessoa(char *file)
 	}	
 		
 	inFile.close();
+	}
+	catch(std::ifstream::failure e){
+		cout<<"Erro de I/O"<<endl;
+	}
 	return p;
 }
 
@@ -164,7 +177,9 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 {
 	map<int,Midia*> m;
 	vector<Pessoa> elenco; 
-	ifstream inFile(file);
+	ifstream inFile;//(file);
+	try{
+	inFile.open(file);
 	string line;
 	vector<string> partes;
 	// int count = 0;
@@ -188,8 +203,15 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 		string dir = partes[3];
 		if(dir.length()>0)
 		{
-		 	int id = atoi(dir.c_str());
+			int id;
+			try{
+		 	id = atoi(dir.c_str());
 		 	diretor = &lPessoas.find(id)->second;
+		 	}
+		 	catch(const std::out_of_range& oor){
+		 		cout<<"Dados inconsistentes (Diretor: "<<id<<")"<<endl;
+		 		return m;
+		 	}
 		}
 		 //string lAutores = partes[4];		 
 		/** LER LISTA DE AUTORES */
@@ -204,7 +226,8 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 		bool deseja = !partes[11].compare("x");
 		replace(partes[12].begin(),partes[12].end(),',','.');
 		double preco = atof(partes[12].c_str());
-
+		int flag=0;
+		
 		switch(type)
 		{
 			case 'L':
@@ -223,7 +246,13 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 				m.insert(pair<int,Midia*>(codigo,new Filme(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,*diretor,elenco)));
 				relationPessoaMidia(elenco,*(m.find(codigo)->second),lPessoas);
 				lGenero.find(gen)->second.addMidiaGen(*(m.find(codigo)->second));
-				diretor->addMidia(*(m.find(codigo)->second));
+				for(int x=0; x<elenco.size(); x++)
+					if(elenco[x].getNome() == diretor->getNome()){
+						flag = 1;
+						break;
+					}
+				if(flag==0)
+					diretor->addMidia(*(m.find(codigo)->second));
 				//diretor.addMidia(*(m.find(codigo)->second));
 				break;
 			case 'S': 
@@ -244,6 +273,10 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 
 	}	
 	inFile.close();
+	}
+	catch(std::ifstream::failure e){
+		cout<<"Erro de I/O"<<endl;
+	}
 
 	return m;
 
@@ -255,12 +288,14 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
  * @param  m    [description]
  * @return      [description]
  */
-map<int,Emprestimo> static readEmprestimo(char *file)
+map<int,Emprestimo> static readEmprestimo(char *file, map<int,Midia*> m)
 {
 	time_t t = 0;
 	time_t f = 0;
 	map<int,Emprestimo> e;
-	ifstream inFile(file);
+	ifstream inFile;//(file);
+	try{
+	inFile.open(file);
 	string line;
 	vector<string> partes;
 	vector<string>data;
@@ -273,6 +308,13 @@ map<int,Emprestimo> static readEmprestimo(char *file)
 		getline(inFile,line);
 		StringSplit(line,";",partes);
 		int codigo = atoi(partes[0].c_str());
+		try{
+			m.find(codigo);
+		}
+		catch(const std::out_of_range& oor){
+			cout<<"Dados inconsistentes (Midia: "<<codigo<<")"<<endl;
+			return e;
+		}
 		nome = partes[1];
 		StringSplit(partes[2],"/",data);
 		
@@ -297,6 +339,10 @@ map<int,Emprestimo> static readEmprestimo(char *file)
 		partes.clear();
 	}
 	inFile.close();
+	}
+	catch(std::ifstream::failure e){
+		cout<<"Erro de I/O"<<endl;
+	}
 	return e;
 }
 
@@ -343,7 +389,9 @@ void static generatorWishList(map<int,Midia*> m)
 {
 	/*TEM QUE APRENDER A DAR FREE NO LOCALE*/
 	locale::global(locale("pt_BR.UTF-8"));
-	ofstream outFile("4-wishlist.csv");
+	try{
+	ofstream outFile;//("4-wishlist.csv");
+	outFile.open("4-wishlist.csv");
 	vector<Midia> lMidias;
 	outFile << "Tipo;Mídia;Gênero;Preço" << endl;
 	mapToVectorMidia(m,lMidias);
@@ -368,6 +416,11 @@ void static generatorWishList(map<int,Midia*> m)
 	}
 	lMidias.clear();
 	outFile.close();
+	}
+	catch(std::ofstream::failure e){
+		cout<<"Erro de I/O"<<endl;
+		return;
+	}
 }
 
 
@@ -397,7 +450,9 @@ bool static compareToEmprestimo(Emprestimo& s1,Emprestimo& s2)
 
 void static generatorEmprestimos(map<int,Emprestimo> e){
 	
-	ofstream outFile("3-emprestimos.csv");
+	ofstream outFile;//("3-emprestimos.csv");
+	try{
+	outFile.open("3-emprestimos.csv");
 	outFile<<"Data;Tomador;Atrasado?;Dias de Atraso"<<endl;
 	vector<Emprestimo> emps;
 	mapToVectorEmprestimo(e, emps);
@@ -421,6 +476,12 @@ void static generatorEmprestimos(map<int,Emprestimo> e){
 		else
 			outFile<<"Não;0"<<endl;
 		
+	}
+	outFile.close();
+	}
+	catch(std::ofstream::failure e){
+		cout<<"Erro de I/O"<<endl;
+		return;
 	}
 	
 }
@@ -458,7 +519,9 @@ bool static compareToTrab( Midia& s1, Midia& s2)
 
 void static generatorPorPessoa(map<int,Pessoa> p){
 	
-	ofstream outFile("2-porpessoa.csv");
+	ofstream outFile;//("2-porpessoa.csv");
+	try{
+	outFile.open("2-porpessoa.csv");
 	outFile<<"Pessoa;Produção"<<endl;
 	vector<Pessoa> lPessoas;
 	unsigned int j;
@@ -482,6 +545,12 @@ void static generatorPorPessoa(map<int,Pessoa> p){
 			}
 			outFile << lPessoas[i].getTrabalhos()[j].getNome() << endl;
 		}		
+	}
+	outFile.close();
+	}
+	catch(std::ofstream::failure e){
+		cout<<"Erro de I/O"<<endl;
+		return;
 	}
 	
 }
@@ -527,7 +596,9 @@ bool static compareToSerie( Serie& s1, Serie& s2)
 void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia*> &m, map<string,Genero> g){
 	
 	locale::global(locale("C"));
-	ofstream outFile("1-estatisticas.txt");
+	ofstream outFile;//("1-estatisticas.txt");
+	try{
+	outFile.open("1-estatisticas.txt");
 	vector<Midia> lMidias;
 	vector<Serie*> lSeries;
 	set<string> nomeSeries;
@@ -574,6 +645,12 @@ void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia*> &m, map<str
 			}	
 		}
 		outFile << "\t" << *it <<": "<< assistida << " assistidas, " << assistir << " a assistir" <<endl;
+	}
+	outFile.close();
+	}
+	catch(std::ofstream::failure e){
+		cout<<"Erro de I/O"<<endl;
+		return;
 	}
 	
 }
