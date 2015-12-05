@@ -179,7 +179,7 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 
 	while(!inFile.eof())
 	{
-		Pessoa diretor;
+		Pessoa *diretor;
 		getline(inFile,line);
 		StringSplit(line,";",partes);
 		int codigo = atoi(partes[0].c_str());
@@ -189,7 +189,7 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 		if(dir.length()>0)
 		{
 		 	int id = atoi(dir.c_str());
-		 	diretor = lPessoas.find(id)->second;
+		 	diretor = &lPessoas.find(id)->second;
 		}
 		 //string lAutores = partes[4];		 
 		/** LER LISTA DE AUTORES */
@@ -211,6 +211,7 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 				m.insert(pair<int,Midia*>(codigo,new Livro(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco)));
 				relationPessoaMidia(elenco,*(m.find(codigo)->second),lPessoas);
 				lGenero.find(gen)->second.addMidiaGen(*(m.find(codigo)->second));
+
 				// for(unsigned int i =0; i < elenco.size();i++)
 				     // elenco[i].addMidia(m.find(codigo)->second);
 					// cout << p[i].getTrabalhos()[0].getNome()<< endl;
@@ -219,10 +220,11 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 				// cout << elenco[0].getTrabalhos()[0].getNome() << endl;
 				break;
 			case 'F':
-				m.insert(pair<int,Midia*>(codigo,new Filme(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,diretor,elenco)));
+				m.insert(pair<int,Midia*>(codigo,new Filme(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,*diretor,elenco)));
 				relationPessoaMidia(elenco,*(m.find(codigo)->second),lPessoas);
 				lGenero.find(gen)->second.addMidiaGen(*(m.find(codigo)->second));
-				// lPessoas.find(partes[3])->second.addMidia(*(m.find(codigo)->second));
+				diretor->addMidia(*(m.find(codigo)->second));
+				//diretor.addMidia(*(m.find(codigo)->second));
 				break;
 			case 'S': 
 				m.insert(pair<int,Midia*>(codigo,new Serie(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco,temporada,serie)));
