@@ -22,7 +22,7 @@ public:
 	string getNome();
 	//void addMidia(Midia m);
 	// int qtdTrabalhos();
-	vector<Midia> getTrabalhos();
+	vector<Midia>& getTrabalhos();
 	//int compareTo(Pessoa o);
 	void addMidia(Midia& midia);
 	
