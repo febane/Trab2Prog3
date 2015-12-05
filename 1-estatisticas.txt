@@ -1,5 +1,5 @@
-Horas consumidas: 2500 minutos
-Horas a consumir: 3815 minutos
+Horas consumidas: 2.500 minutos
+Horas a consumir: 3.815 minutos
 
 Mídias por gênero: 
 	Ação: 0
@@ -21,5 +21,5 @@ Mídias por gênero:
 	Terror (ou horror): 2
 
 Temporadas por série: 
-	Fringe: 0 assistidas, 1 assistir
-	Twin Peaks: 1 assistidas, 1 assistir
+	Fringe: 0 assistidas, 1 a assistir
+	Twin Peaks: 1 assistidas, 1 a assistir

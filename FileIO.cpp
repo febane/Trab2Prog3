@@ -314,12 +314,38 @@ void static freeMidia(map<int,Midia*>m)
 }
 
 
+/** [compareToMidia ORDENANDO AS MIDIAS] */
+bool static compareToMidia( Midia& s1, Midia& s2)
+{
+   locale::global(locale("pt_BR.UTF-8"));
+   const collate<char>& col = use_facet<collate<char> >(locale()); // Use the global locale
+   const char* pb1; 
+   const char* pb2;
+
+   if(s1.getType() != s2.getType())
+   		return ( s1.getType() < s2.getType());
+   else	
+   	if(s1.getPreco() != s2.getPreco())
+   	{
+		return (s1.getPreco() > s2.getPreco());
+   }else
+   {
+   		pb1 = s1.getNome().data();
+   		pb2 = s2.getNome().data();
+		return (col.compare(pb1, pb1 + s1.getNome().size(),pb2, pb2 + s2.getNome().size()) < 0);
+   	}
+
+}
+
 void static generatorWishList(map<int,Midia*> m)
 {
+	/*TEM QUE APRENDER A DAR FREE NO LOCALE*/
+	locale::global(locale("pt_BR.UTF-8"));
 	ofstream outFile("4-wishlist.csv");
 	vector<Midia> lMidias;
 	outFile << "Tipo;Mídia;Gênero;Preço" << endl;
 	mapToVectorMidia(m,lMidias);
+	sort(lMidias.begin(),lMidias.end(),compareToMidia);
 
 	/* TEMOS QUE ORDENAR O VETOR DA FORMA QUE O PROFESSOR QUER !!! */
 	for(unsigned int i = 0; i < lMidias.size(); i++)
@@ -327,20 +353,19 @@ void static generatorWishList(map<int,Midia*> m)
 		if(lMidias[i].isDeseja())
 		{
 			switch(lMidias[i].getType())
-			{
-				case 'L': outFile << "Livro;" << lMidias[i].getNome() <<";"<< lMidias[i].getGenero().getNome()<<";"<<lMidias[i].getPreco()<< endl;
-					break;
-				case 'F': outFile << "Filme;" << lMidias[i].getNome() <<";"<< lMidias[i].getGenero().getNome()<<";"<<lMidias[i].getPreco() << endl;
-					break;
-				case 'S': outFile << "Série;" << lMidias[i].getNome() <<";"<< lMidias[i].getGenero().getNome()<<";"<<lMidias[i].getPreco() << endl;
-					break;
-				
-			}
+	         {     
+	            case 'L': outFile  << "Livro;" << lMidias[i].getNome() <<";"<< lMidias[i].getGenero().getNome()<<";R$ " << setiosflags (ios::fixed)<< setprecision(2) <<lMidias[i].getPreco()<< endl;
+	               break;
+	            case 'F': outFile  << "Filme;" << lMidias[i].getNome() <<";"<< lMidias[i].getGenero().getNome()<<";R$ " << setiosflags (ios::fixed)<< setprecision(2) <<lMidias[i].getPreco() << endl;
+	               break;
+	            case 'S': outFile  << "Série;" << lMidias[i].getNome() <<";"<< lMidias[i].getGenero().getNome()<<";R$ " << setiosflags (ios::fixed)<< setprecision(2) <<lMidias[i].getPreco() << endl;
+	               break;
+	            
+	         }
 		}
 	}
 	lMidias.clear();
 	outFile.close();
-
 }
 
 
