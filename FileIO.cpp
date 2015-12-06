@@ -119,7 +119,7 @@ map<int,Pessoa> static readPessoa(char *file)
 		if(line.length() < 1) break;
 		// cout << line << endl;		
 		StringSplit(line,";",partes);
-		if(*(partes[1].begin())!=' ') partes[1].erase(partes[1].begin());
+		if(*(partes[1].begin())==' ') partes[1].erase(partes[1].begin());
 		if(*(partes[1].end()-1)>126||*(partes[1].end()-1)<33) partes[1].pop_back();
 
 		// if(count < partes.size())
@@ -485,7 +485,7 @@ void static generatorEmprestimos(map<int,Emprestimo> e){
 	sort(emps.begin(),emps.end(),compareToEmprestimo);
 	for (unsigned int i=0; i<emps.size(); i++){
 		
-		outFile<<setfill('0')<<setw(2)<<emps[i].getEmprestimo().tm_mday<<"/"<<setfill('0')<<setw(2)<<emps[i].getEmprestimo().tm_mon<<"/"<<emps[i].getEmprestimo().tm_year/1000<<setw(3)<<emps[i].getEmprestimo().tm_year%1000<<";"<<emps[i].getTomador()<<";";
+		outFile<<setfill('0')<<setw(2)<<emps[i].getEmprestimo().tm_mday<<"/"<<setfill('0')<<setw(2)<<(emps[i].getEmprestimo().tm_mon == 0 ? 12 : emps[i].getEmprestimo().tm_mon)<<"/"<<emps[i].getEmprestimo().tm_year/1000<<setw(3)<<(emps[i].getEmprestimo().tm_mon == 0 ? emps[i].getEmprestimo().tm_year%1000 - 1 : emps[i].getEmprestimo().tm_year%1000)<<";"<<emps[i].getTomador()<<";";
 		
 		a = emps[i].getDevolucao();
 		dif = difftime(mktime(&hj),mktime(&a));
