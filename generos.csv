@@ -1,11 +1,18 @@
-Sigla;Nome
-ACO;Ação
-ANM;Animação
-AVT; Aventura
-BIO; Biografia
-CMD;Comédia
-CRM; Crime
-DOC;Documentário
-DRM; Drama
-FST; Fantasia
-FCC;Ficção Científica
+Sigla;Gênero
+AC;Ação
+AN;Animação
+AV;Aventura
+CO;Comédia
+CR;Comédia romântica
+DO;Documentários
+DR;Drama
+ES;Espionagem
+FA;Fantasia
+FC;Ficção Científica
+GU;Guerra
+MU;Musical
+PO;Policial
+EP;Épico
+RO;Romance
+SU;Suspense
+TE;Terror (ou horror)

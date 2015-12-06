@@ -72,7 +72,7 @@ map<string,Genero> static readGenero(char *file)
 		getline(inFile,line);
 		if(line.length() < 1) break;
 		StringSplit(line,";",partes);
-		if(!isalpha(*(partes[1].end()-1)) || !isdigit(*(partes[1].end()-1))) partes[1].pop_back();
+		if(!isalpha(*(partes[1].end()-1)) && !isdigit(*(partes[1].end()-1))) partes[1].pop_back();
 		g.insert(pair<string,Genero>(partes[0],Genero(partes[0],partes[1])));	
 		// count +=2;
 		partes.clear();
@@ -118,7 +118,7 @@ map<int,Pessoa> static readPessoa(char *file)
 		if(line.length() < 1) break;
 		// cout << line << endl;		
 		StringSplit(line,";",partes);
-		if(!isalpha(*(partes[1].end()-1)) || !isdigit(*(partes[1].end()-1))) partes[1].pop_back();
+		if(!isalpha(*(partes[1].end()-1)) && !isdigit(*(partes[1].end()-1))) partes[1].pop_back();
 
 		// if(count < partes.size())
 			p.insert(pair<int,Pessoa>(atoi(partes[0].c_str()),Pessoa(atoi(partes[0].c_str()),partes[1])));	
@@ -210,7 +210,7 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 		Pessoa *diretor;
 		
 		StringSplit(line,";",partes);
-		if(!isalpha(*(partes[1].end()-1)) || !isdigit(*(partes[12].end()-1))) partes[12].pop_back();
+		if(!isalpha(*(partes[1].end()-1)) && !isdigit(*(partes[12].end()-1))) partes[12].pop_back();
 		int codigo = atoi(partes[0].c_str());
 		string nome = partes[1];
 		char type = partes[2].at(0);
@@ -323,7 +323,7 @@ map<int,Emprestimo> static readEmprestimo(char *file, map<int,Midia*> m)
 		}
 		nome = partes[1];
 		StringSplit(partes[2],"/",data);
-		if(!isalpha(*(partes[3].end()-1)) || !isdigit(*(partes[3].end()-1))) partes[3].pop_back();
+		if(!isalpha(*(partes[3].end()-1)) && !isdigit(*(partes[3].end()-1))) partes[3].pop_back();
 		//if(!isdigit(data[0]) || !isdigit(data[1]) || !isdigit(data[0]))
 			//cout<<"Erro de formatação"<<endl;
 		dateEmp = *localtime(&t);
