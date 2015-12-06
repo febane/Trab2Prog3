@@ -1,21 +1,20 @@
-Horas consumidas: 1382 minutos
-Horas a consumir: 462 minutos
+Horas consumidas: 2450 minutos
+Horas a consumir: 891 minutos
 
 Mídias por gênero:
-	Ação: 4
-	 Aventura: 3
-	 Fantasia: 3
-	 Crime: 2
-	 Drama: 2
-	Ficção Científica: 2
-	Animação: 1
-	 Biografia: 1
-	Comédia: 1
-	Documentário: 1
+	Comédia: 5
+	Drama: 5
+	Animação: 2
+	Aventura: 2
+	Biografia: 1
+	Ficção Científica: 1
+	Novela: 1
+	Romance: 1
+	Sátira: 1
+	Western: 1
 
 Temporadas por série:
-	Arrow: 1 assistidas, 0 a assistir
-	Dr. House: 1 assistidas, 0 a assistir
-	Gotham : 1 assistidas, 0 a assistir
-	The Big Bang Theory: 1 assistidas, 0 a assistir
-	The Flash: 1 assistidas, 0 a assistir
+	Avatar: The Last Airbender: 1 assistidas, 0 a assistir
+	Narcos: 1 assistidas, 0 a assistir
+	The Office: 2 assistidas, 0 a assistir
+	True Detective: 0 assistidas, 1 a assistir

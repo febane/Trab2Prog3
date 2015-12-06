@@ -36,14 +36,20 @@ int main(int argc, char *argv[]){
 	idx = isIn(argv, (char*)"-g",argc);
 	if(idx!=-1)
 		g = readGenero(argv[idx+1]);
+		if(g.size()==0)
+		 return -1;
 	
 	idx = isIn(argv, (char*)"-p",argc);
 	if(idx!=-1)
 		p = readPessoa(argv[idx+1]);
+		if(p.size()==0)
+		 return -1;
 	
 	idx = isIn(argv, (char*)"-m",argc);
-	if(idx!=-1){	
-		m = readMidia(argv[idx+1],p,g);		
+	if(idx!=-1){
+		m = readMidia(argv[idx+1],p,g);	
+		if(m.size()==0)
+		 return -1;
 		generatorWishList(m);
 		generatorPorPessoa(p);
 		generatorEstatisticas(p,m,g);		
@@ -53,6 +59,8 @@ int main(int argc, char *argv[]){
 	if(idx!=-1){
 		
 		e = readEmprestimo(argv[idx+1],m);
+		if(e.size()==0)
+		 return -1;
 		generatorEmprestimos(e);
 		
 	}
