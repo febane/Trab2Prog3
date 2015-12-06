@@ -72,6 +72,7 @@ map<string,Genero> static readGenero(char *file)
 		getline(inFile,line);
 		if(line.length() < 1) break;
 		StringSplit(line,";",partes);
+		if(*(partes[1].begin())>126||*(partes[1].begin())<33) partes[1].erase(partes[1].begin());
 		if(*(partes[1].end()-1)>126||*(partes[1].end()-1)<33) partes[1].pop_back();
 		g.insert(pair<string,Genero>(partes[0],Genero(partes[0],partes[1])));	
 		// count +=2;

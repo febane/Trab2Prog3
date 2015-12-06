@@ -3,13 +3,13 @@ Horas a consumir: 462 minutos
 
 Mídias por gênero:
 	Ação: 4
-	 Aventura: 3
-	 Fantasia: 3
-	 Crime: 2
-	 Drama: 2
+	Aventura: 3
+	Fantasia: 3
+	Crime: 2
+	Drama: 2
 	Ficção Científica: 2
 	Animação: 1
-	 Biografia: 1
+	Biografia: 1
 	Comédia: 1
 	Documentário: 1
 
