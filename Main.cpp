@@ -32,6 +32,7 @@ int main(int argc, char *argv[]){
 	map<int,Midia*> m;
 	map<int,Emprestimo> e;
 	int idx;
+	try{
 	idx = isIn(argv, (char*)"-g",argc);
 	if(idx!=-1)
 		g = readGenero(argv[idx+1]);
@@ -56,4 +57,8 @@ int main(int argc, char *argv[]){
 		
 	}
 		freeMidia(m);
+	}catch(exception& f)
+	{
+
+	}
 }

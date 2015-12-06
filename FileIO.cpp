@@ -66,16 +66,15 @@ map<string,Genero> static readGenero(char *file)
 	}
 
 	getline(inFile,line);
-	
-	while(!inFile.eof())
+	getline(inFile,line);			
+	while(!inFile.eof() && line.length()>0)
 	{
-		getline(inFile,line);			
-//		cout << line << endl;
 		StringSplit(line,";",partes);
 		g.insert(pair<string,Genero>(partes[0],Genero(partes[0],partes[1])));	
 		// count +=2;
 
 		partes.clear();
+		getline(inFile,line);			
 	}
 
 	inFile.close();
@@ -110,15 +109,16 @@ map<int,Pessoa> static readPessoa(char *file)
 	}
 
 	getline(inFile,line);
+	getline(inFile,line);
 
-	while(!inFile.eof())
+	while(!inFile.eof() && line.length() > 0)
 	{
-		getline(inFile,line);	
 		// cout << line << endl;		
 		StringSplit(line,";",partes);
 		// if(count < partes.size())
 			p.insert(pair<int,Pessoa>(atoi(partes[0].c_str()),Pessoa(atoi(partes[0].c_str()),partes[1])));	
 		partes.clear();
+		getline(inFile,line);	
 	}	
 		
 	inFile.close();
@@ -191,11 +191,11 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 	}
 
 	getline(inFile,line);
-
-	while(!inFile.eof())
+	getline(inFile,line);
+	while(!inFile.eof() && line.length() > 0)
 	{
 		Pessoa *diretor;
-		getline(inFile,line);
+		
 		StringSplit(line,";",partes);
 		int codigo = atoi(partes[0].c_str());
 		string nome = partes[1];
@@ -258,6 +258,7 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 		}
 		elenco.clear();		
 		partes.clear();
+		getline(inFile,line);
 
 	}	
 	inFile.close();
@@ -291,15 +292,16 @@ map<int,Emprestimo> static readEmprestimo(char *file, map<int,Midia*> m)
 	string nome;
 	getline(inFile,line);
 	time(&t);
-	while(!inFile.eof())
+	getline(inFile,line);
+	while(!inFile.eof() && line.length() > 0)
 	{
-		getline(inFile,line);
+		
 		StringSplit(line,";",partes);
 		int codigo = atoi(partes[0].c_str());
 		try{
 			m.find(codigo);
 		}
-		catch(const std::out_of_range& oor){
+		catch(exception& f){
 			cout<<"Dados inconsistentes (Midia: "<<codigo<<")"<<endl;
 			return e;
 		}
@@ -323,6 +325,7 @@ map<int,Emprestimo> static readEmprestimo(char *file, map<int,Midia*> m)
 		mktime(&dateDev);
 		e.insert(pair<int,Emprestimo>(codigo,Emprestimo(codigo,nome,dateEmp,dateDev)));
 		partes.clear();
+		getline(inFile,line);
 	}
 	inFile.close();
 	}
@@ -392,7 +395,7 @@ void static generatorWishList(map<int,Midia*> m)
 	/* TEMOS QUE ORDENAR O VETOR DA FORMA QUE O PROFESSOR QUER !!! */
 	for(unsigned int i = 0; i < lMidias.size(); i++)
 	{
-		if(lMidias[i].isDeseja())
+		if(lMidias[i].isDeseja() && !lMidias[i].isPossui())
 		{
 			switch(lMidias[i].getType())
 	         {     
@@ -456,7 +459,7 @@ void static generatorEmprestimos(map<int,Emprestimo> e){
 	int dif;
 	
 	hj = *localtime(&tempo);
-	hj.tm_hour = 0; hj.tm_min = 0; hj.tm_sec = 0; hj.tm_mday = 6; hj.tm_mon = 11; hj.tm_year = 2015;
+	hj.tm_hour = 0; hj.tm_min = 0; hj.tm_sec = 0; hj.tm_mday = 7; hj.tm_mon = 11; hj.tm_year = 2015;
 	
 	sort(emps.begin(),emps.end(),compareToEmprestimo);
 	for (unsigned int i=0; i<emps.size(); i++){

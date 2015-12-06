@@ -1,4 +1,4 @@
-CC=g++
+CC=g++ -std=c++11
 FLAGS= $(WARN) -O2 $G
 WARN= -Wall -Wextra
 SOURCES= Main.cpp Midia.cpp Filme.cpp Livro.cpp Serie.cpp Emprestimo.cpp Genero.cpp FileIO.cpp Pessoa.cpp
