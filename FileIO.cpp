@@ -66,15 +66,16 @@ map<string,Genero> static readGenero(char *file)
 	}
 
 	getline(inFile,line);
-	getline(inFile,line);			
-	while(!inFile.eof() && line.length()>0)
+				
+	while(!inFile.eof())
 	{
+		getline(inFile,line);
+		if(line.length() < 1) break;
 		StringSplit(line,";",partes);
+		partes[1].pop_back();
 		g.insert(pair<string,Genero>(partes[0],Genero(partes[0],partes[1])));	
 		// count +=2;
-
 		partes.clear();
-		getline(inFile,line);			
 	}
 
 	inFile.close();
@@ -109,16 +110,17 @@ map<int,Pessoa> static readPessoa(char *file)
 	}
 
 	getline(inFile,line);
-	getline(inFile,line);
+	
 
-	while(!inFile.eof() && line.length() > 0)
+	while(!inFile.eof())
 	{
+		getline(inFile,line);
+		if(line.length() < 1) break;
 		// cout << line << endl;		
 		StringSplit(line,";",partes);
 		// if(count < partes.size())
 			p.insert(pair<int,Pessoa>(atoi(partes[0].c_str()),Pessoa(atoi(partes[0].c_str()),partes[1])));	
 		partes.clear();
-		getline(inFile,line);	
 	}	
 		
 	inFile.close();
@@ -199,9 +201,10 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 	}
 
 	getline(inFile,line);
-	getline(inFile,line);
-	while(!inFile.eof() && line.length() > 0)
+	while(!inFile.eof())
 	{
+		getline(inFile,line);
+		if(line.length() < 1) break;
 		Pessoa *diretor;
 		
 		StringSplit(line,";",partes);
@@ -266,8 +269,6 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 		}
 		elenco.clear();		
 		partes.clear();
-		getline(inFile,line);
-
 	}	
 	inFile.close();
 	}
@@ -304,10 +305,10 @@ map<int,Emprestimo> static readEmprestimo(char *file, map<int,Midia*> m)
 	string nome;
 	getline(inFile,line);
 	time(&t);
-	getline(inFile,line);
-	while(!inFile.eof() && line.length() > 0)
+	while(!inFile.eof())
 	{
-		
+		getline(inFile,line);
+		if(line.length() < 1) break;
 		StringSplit(line,";",partes);
 		int codigo = atoi(partes[0].c_str());
 		try{
@@ -340,7 +341,6 @@ map<int,Emprestimo> static readEmprestimo(char *file, map<int,Midia*> m)
 		mktime(&dateDev);
 		e.insert(pair<int,Emprestimo>(codigo,Emprestimo(codigo,nome,dateEmp,dateDev)));
 		partes.clear();
-		getline(inFile,line);
 	}
 	inFile.close();
 	}
