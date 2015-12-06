@@ -39,14 +39,6 @@ void Pessoa::addMidia(Midia& midia)//:midia(midia)
 	this->trabalhos.push_back(midia);
 }
 
-/**
- * Pegar quantidade de midias relacionadas a pessoa
- * @return quantidade de trabalhos realizados
- */
-// int Pessoa::qtdTrabalhos()
-// {
-// 	return this->trabalhos.size();
-// }
 
 /**
  * Pega lista de midias feitas pela pessoa
@@ -56,16 +48,3 @@ vector<Midia>& Pessoa::getTrabalhos() {
  	return trabalhos;
 }
 
-/*
-int Pessoa::compareTo(Pessoa o) {
-	locale br = setlocale(LC_ALL, "Portuguese");
-	collate collator = use_facet<collate<char> >(br);
-	try{
-		return collator.compare(this.getNome(), this.getNome()+this.getNome().length(), o.getNome(), o.getNome()+o.getNome().length());
-	}
-	catch(Exception ex){
-		ex.printStackTrace();
-	}
-	return 0;
-}
-*/

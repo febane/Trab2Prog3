@@ -46,11 +46,3 @@ struct tm Emprestimo::getDevolucao() {
 	return devolucao;
 }
 
-// int Emprestimo::compareTo(Emprestimo arg0) {
-// 	if(this.emprestimo<arg0.getEmprestimo())
-// 		return 1;
-// 	else if(this.emprestimo>arg0.getEmprestimo())
-// 		return -1;
-// 	else
-// 		return 0;
-// }

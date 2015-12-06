@@ -17,7 +17,5 @@ public:
 	int getMidia();
 	string getTomador();
 	struct tm getEmprestimo();
-	struct tm getDevolucao();
-	//int compareTo(Emprestimo arg0);
-	
+	struct tm getDevolucao();	
 };

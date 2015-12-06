@@ -27,14 +27,11 @@ int isIn(char *args[], char param[], int argc)
  * @throws ParseException
  */
 int main(int argc, char *argv[]){
-	
 	map<int,Pessoa> p;
 	map<string,Genero> g;
 	map<int,Midia*> m;
 	map<int,Emprestimo> e;
-	bool ro = 0;
 	int idx;
-	
 	idx = isIn(argv, (char*)"-g",argc);
 	if(idx!=-1)
 		g = readGenero(argv[idx+1]);
@@ -55,9 +52,7 @@ int main(int argc, char *argv[]){
 	if(idx!=-1){
 		
 		e = readEmprestimo(argv[idx+1],m);
-		
-		if(!ro)
-			generatorEmprestimos(e);
+		generatorEmprestimos(e);
 		
 	}
 		freeMidia(m);

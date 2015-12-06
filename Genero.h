@@ -19,8 +19,6 @@ public:
 	void addMidiaGen(Midia& m);
 	vector<Midia*> getMidiaGen();
 	int qtdGenero();
-	//int compareTo(Genero o);
-
 };
 
 #endif

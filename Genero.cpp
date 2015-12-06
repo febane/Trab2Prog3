@@ -45,24 +45,8 @@ int Genero::qtdGenero()
 {
 	return midiasGenero.size();
 }
-
-
+/**  */
 vector<Midia*> Genero::getMidiaGen()
 {
 	return midiasGenero;
 }
-//
-//
-// int Genero::compareTo(Genero o) {
-// 	locale br = setlocale(LC_ALL, "Portuguese");
-// 	collate collator = use_facet<collate<char> >(br);
-// 	if(this.midiasGenero.size() > o.midiasGenero.size())
-// 	{
-// 		return -1;
-// 	}else if(this.midiasGenero.size() < o.midiasGenero.size())
-// 	{
-// 		return 1;
-// 	}else {
-// 		return collator.compare(this.getNome(), this.getNome()+this.getNome().length(), o.getNome(), o.getNome()+o.getNome().length());
-// 	}
-// }

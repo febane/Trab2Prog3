@@ -235,12 +235,6 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 				relationPessoaMidia(elenco,*(m.find(codigo)->second),lPessoas);
 				lGenero.find(gen)->second.addMidiaGen(*(m.find(codigo)->second));
 
-				// for(unsigned int i =0; i < elenco.size();i++)
-				     // elenco[i].addMidia(m.find(codigo)->second);
-					// cout << p[i].getTrabalhos()[0].getNome()<< endl;
-				 
-				
-				// cout << elenco[0].getTrabalhos()[0].getNome() << endl;
 				break;
 			case 'F':
 				m.insert(pair<int,Midia*>(codigo,new Filme(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,*diretor,elenco)));
@@ -253,21 +247,15 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 					}
 				if(flag==0)
 					diretor->addMidia(*(m.find(codigo)->second));
-				//diretor.addMidia(*(m.find(codigo)->second));
+
 				break;
 			case 'S': 
 				m.insert(pair<int,Midia*>(codigo,new Serie(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco,temporada,serie)));
 				relationPessoaMidia(elenco,*(m.find(codigo)->second),lPessoas);
 				lGenero.find(gen)->second.addMidiaGen(*(m.find(codigo)->second));				
-				// Midia *x = new Serie(codigo,nome,tamanho,lGenero.find(gen)->second,possui,consumiu,deseja,preco,elenco,temporada,serie);
-				// Serie *ss = (Serie*)x;
-				// Serie *ss = static_cast<Serie*>(&x);
-				//Serie *ss = (Serie*) &(m.find(codigo)->second,lPessoas);
-				// cout << ss->getNomeSerie() << endl;
 
 				break;
 		}
-		// printVector(elenco);
 		elenco.clear();		
 		partes.clear();
 
@@ -333,8 +321,6 @@ map<int,Emprestimo> static readEmprestimo(char *file, map<int,Midia*> m)
 		data.clear();
 		mktime(&dateEmp);
 		mktime(&dateDev);
-		//cout << codigo << " - " << dateEmp.tm_mday << "/" << dateEmp.tm_mon << "/" << dateEmp.tm_year << endl;
-		//cout << codigo << " - " << dateDev.tm_mday << "/" << dateDev.tm_mon << "/" << dateDev.tm_year << endl;
 		e.insert(pair<int,Emprestimo>(codigo,Emprestimo(codigo,nome,dateEmp,dateDev)));
 		partes.clear();
 	}
@@ -346,6 +332,7 @@ map<int,Emprestimo> static readEmprestimo(char *file, map<int,Midia*> m)
 	return e;
 }
 
+/** [mapToVectorMidia description] */
 vector<Midia> static mapToVectorMidia(map<int,Midia*>m,vector<Midia>& l)
 {
 	for (map<int,Midia*>::iterator it=m.begin(); it!=m.end(); ++it)
@@ -385,6 +372,11 @@ bool static compareToMidia( Midia& s1, Midia& s2)
 
 }
 
+/**
+ * [generatorWishList description]
+ * @param  m [description]
+ * @return   [description]
+ */
 void static generatorWishList(map<int,Midia*> m)
 {
 	/*TEM QUE APRENDER A DAR FREE NO LOCALE*/
@@ -423,7 +415,7 @@ void static generatorWishList(map<int,Midia*> m)
 	}
 }
 
-
+/** [mapToVectorEmprestimo description] */
 vector<Emprestimo> static mapToVectorEmprestimo(map<int,Emprestimo>p,vector<Emprestimo>& l)
 {
 	for (map<int,Emprestimo>::iterator it=p.begin(); it!=p.end(); ++it)
@@ -432,6 +424,7 @@ vector<Emprestimo> static mapToVectorEmprestimo(map<int,Emprestimo>p,vector<Empr
 	return l;
 }
 
+/** [compareToEmprestimo description] */
 bool static compareToEmprestimo(Emprestimo& s1,Emprestimo& s2)
 {
    const struct tm pb1 = s1.getEmprestimo(); 
@@ -442,12 +435,14 @@ bool static compareToEmprestimo(Emprestimo& s1,Emprestimo& s2)
    else if(pb1.tm_mon != pb2.tm_mon)
     return pb1.tm_mon > pb2.tm_mon;
    else
-    return pb1.tm_mday > pb2.tm_mday;
-   
-   //return (col.compare(pb1, pb1 + s1.getEmprestimo().size(),pb2, pb2 + s2.getEmprestimo().size()) < 0);
+    return pb1.tm_mday > pb2.tm_mday;   
 }
 
-
+/**
+ * [generatorEmprestimos description]
+ * @param  e [description]
+ * @return   [description]
+ */
 void static generatorEmprestimos(map<int,Emprestimo> e){
 	
 	ofstream outFile;//("3-emprestimos.csv");
@@ -486,6 +481,7 @@ void static generatorEmprestimos(map<int,Emprestimo> e){
 	
 }
 
+/** [mapToVectorPessoa description] */
 vector<Pessoa> static mapToVectorPessoa(map<int,Pessoa>p,vector<Pessoa>& l)
 {
 	for (map<int,Pessoa>::iterator it=p.begin(); it!=p.end(); ++it)
@@ -494,7 +490,7 @@ vector<Pessoa> static mapToVectorPessoa(map<int,Pessoa>p,vector<Pessoa>& l)
 	return l;
 }
 
-
+/** [compareToPessoa description] */
 bool static compareToPessoa(Pessoa& s1,Pessoa& s2)
 {
    locale::global(locale("pt_BR.UTF-8"));
@@ -505,18 +501,22 @@ bool static compareToPessoa(Pessoa& s1,Pessoa& s2)
    return (col.compare(pb1, pb1 + s1.getNome().size(),pb2, pb2 + s2.getNome().size()) < 0);
 }
 
+/** [compareToTrab description] */
 bool static compareToTrab( Midia& s1, Midia& s2)
 {
    locale::global(locale("pt_BR.UTF-8"));
    const collate<char>& col = use_facet<collate<char> >(locale()); // Use the global locale
    const char* pb1 = s1.getNome().data(); 
    const char* pb2 = s2.getNome().data();
-   //cout<<s1.getNome()<<endl;
-   //cout<<s2.getNome()<<endl;
    
    return (col.compare(pb1, pb1 + s1.getNome().size(),pb2, pb2 + s2.getNome().size()) < 0);
 }
 
+/**
+ * [generatorPorPessoa description]
+ * @param  p [description]
+ * @return   [description]
+ */
 void static generatorPorPessoa(map<int,Pessoa> p){
 	
 	ofstream outFile;//("2-porpessoa.csv");
@@ -534,10 +534,10 @@ void static generatorPorPessoa(map<int,Pessoa> p){
 		if(lPessoas[i].getTrabalhos().size() > 0)
 		{
 			outFile << lPessoas[i].getNome() <<";";
-			sort((lPessoas[i].getTrabalhos()).begin(),(lPessoas[i].getTrabalhos()).end(),compareToTrab);
+			sort(lPessoas[i].getTrabalhos().begin(),lPessoas[i].getTrabalhos().end(),compareToTrab);
 			//cout<<lPessoas[i].getNome()<<endl;
-			if(lPessoas[i].getTrabalhos().size()>1)
-				sort(lPessoas[i].getTrabalhos().begin(),lPessoas[i].getTrabalhos().end(),compareToTrab);
+			//if(lPessoas[i].getTrabalhos().size()>1)
+			//	sort(lPessoas[i].getTrabalhos().begin(),lPessoas[i].getTrabalhos().end(),compareToTrab);
 			//cout<<"ok"<<endl;
 			for(j = 0; j < lPessoas[i].getTrabalhos().size()-1; j++)
 			{
@@ -555,6 +555,7 @@ void static generatorPorPessoa(map<int,Pessoa> p){
 	
 }
 
+/** [mapToVectorGenero description] */
 vector<Genero> static mapToVectorGenero(map<string,Genero>g,vector<Genero>& l)
 {
 	for (map<string,Genero>::iterator it=g.begin(); it!=g.end(); ++it)
@@ -563,7 +564,7 @@ vector<Genero> static mapToVectorGenero(map<string,Genero>g,vector<Genero>& l)
 	return l;
 }
 
-
+/** [compareToGenero description] */
 bool static compareToGenero( Genero& s1, Genero& s2)
 {
    locale::global(locale("pt_BR.UTF-8"));
@@ -582,6 +583,7 @@ bool static compareToGenero( Genero& s1, Genero& s2)
 
 }
 
+/** [compareToSerie description] */
 bool static compareToSerie( Serie& s1, Serie& s2)
 {
    locale::global(locale("pt_BR.UTF-8"));
@@ -592,7 +594,13 @@ bool static compareToSerie( Serie& s1, Serie& s2)
    return (col.compare(pb1, pb1 + s1.getNome().size(),pb2, pb2 + s2.getNome().size()) < 0);
 }
 
-
+/**
+ * [generatorEstatisticas description]
+ * @param  p [description]
+ * @param  m [description]
+ * @param  g [description]
+ * @return   [description]
+ */
 void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia*> &m, map<string,Genero> g){
 	
 	locale::global(locale("C"));
@@ -616,21 +624,20 @@ void static generatorEstatisticas(map<int,Pessoa> p, map<int,Midia*> &m, map<str
 			if(it->second->getType() == 'S')
 			{	
 			  lSeries.push_back((Serie*)it->second);
-			  nomeSeries.insert(((Serie*)it->second)->getNomeSerie());  	
-			  //cout << ((Serie*)it->second)->getNomeSerie() << endl;			
+			  nomeSeries.insert(((Serie*)it->second)->getNomeSerie());  			
 			}
 		}
 	}	
 	
 	outFile<<"Horas consumidas: " << horasConsumidas << " minutos" << endl;	
 	outFile<<"Horas a consumir: " << horasConsumir << " minutos" << endl;	
-	outFile<<"\nMídias por gênero: "<<endl;
+	outFile<<"\nMídias por gênero:"<<endl;
 
 	sort(lGenero.begin(),lGenero.end(),compareToGenero);
 	for(unsigned int k = 0; k < lGenero.size();k++)
 		outFile << "\t" << lGenero[k].getNome() << ": " << lGenero[k].getMidiaGen().size() << endl;
 			
-	outFile<<"\nTemporadas por série: "<<endl;
+	outFile<<"\nTemporadas por série:"<<endl;
 	for(set<string>::iterator it=nomeSeries.begin(); it!=nomeSeries.end(); ++it)
 	{  
 		int assistida = 0, assistir = 0;	
