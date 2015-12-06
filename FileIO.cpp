@@ -210,7 +210,7 @@ map<int,Midia*> static readMidia(char *file, map<int,Pessoa>& lPessoas, map<stri
 		Pessoa *diretor;
 		
 		StringSplit(line,";",partes);
-		if(*(partes[1].end()-1)>126||*(partes[1].end()-1)<33) partes[12].pop_back();
+		if(*(partes[12].end()-1)>126||*(partes[12].end()-1)<33) partes[12].pop_back();
 		int codigo = atoi(partes[0].c_str());
 		string nome = partes[1];
 		char type = partes[2].at(0);
@@ -323,7 +323,7 @@ map<int,Emprestimo> static readEmprestimo(char *file, map<int,Midia*> m)
 		}
 		nome = partes[1];
 		StringSplit(partes[2],"/",data);
-		if(*(partes[1].end()-1)>126||*(partes[1].end()-1)<33) partes[3].pop_back();
+		if(*(partes[3].end()-1)>126||*(partes[3].end()-1)<33) partes[3].pop_back();
 		//if(!isdigit(data[0]) || !isdigit(data[1]) || !isdigit(data[0]))
 			//cout<<"Erro de formatação"<<endl;
 		dateEmp = *localtime(&t);
